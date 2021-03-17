@@ -9,13 +9,26 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
+    "styled-components": "^5.2.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "eject": "react-scripts eject",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "unit": "react-scripts test --verbose --watchAll=false",
+    "coverage": "react-scripts test --coverage --watchAll=false",
+    "e2e": "cypress open",
+    "cypress:info": "cypress info",
+    "cypress:run": "cypress run",
+    "cypress:verify": "cypress verify",
+    "cypress:version": "cypress version",
+    "lint": "eslint ./src",
+    "lint:fix": "yarn lint --fix",
+    "prettier": "prettier ./src",
+    "prettier:fix": "yarn prettier --write",
+    "prettier:check": "yarn prettier --check"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +47,36 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^6.7.1",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "4.3.8",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|jsx)?$": "babel-jest"
+    },
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,jsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/src/reportWebVitals.js",
+      "!<rootDir>/src/index.js",
+      "!<rootDir>/src/config/index.js",
+      "!<rootDir>/src/styles/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   }
 }
