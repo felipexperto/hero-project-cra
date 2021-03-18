@@ -6,4 +6,3 @@ lib
 cypress
 src/config
 src/setupTests.js
-src/**/styles.js

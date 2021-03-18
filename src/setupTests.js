@@ -10,7 +10,7 @@ import '@testing-library/jest-dom';
 import 'jest-styled-components';
 import { render } from '@testing-library/react';
 
-import { Root } from 'components/Root';
+import { Root } from 'components/Layout';
 
 const WrapperProvider = ({ children }) => (
   <Root>{children}</Root>
