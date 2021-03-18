@@ -5,7 +5,7 @@ import * as S from './styles';
 
 const Header = ({ kind }) => {
   return (
-    <S.Wrapper kind={kind}>
+    <S.Wrapper kind={kind} data-testid="HP_HEADER">
       <Logo kind={kind} />
       {kind === 'primary' && (
         <div>
