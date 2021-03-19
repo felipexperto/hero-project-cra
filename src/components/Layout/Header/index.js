@@ -1,32 +1,37 @@
 import { oneOf } from 'prop-types';
 
-import { Logo, Search } from 'components/UI';
+import { Container, Logo, Search } from 'components/UI';
 import * as S from './styles';
 
-const Header = ({ kind }) => {
+const Header = ({ variant }) => {
+  const isPrimary = variant === 'primary';
+  const alignment = isPrimary ? 'column' : 'row';
+
   return (
-    <S.Wrapper kind={kind} data-testid="HP_HEADER">
-      <Logo kind={kind} />
-      {kind === 'primary' && (
-        <div>
-          <h1>Explore o Universo</h1>
-          <p>
-            Mergulhe no domínio deslumbrante de todos os personagens clássicos que você
-            ama - e aqueles que você descobrirá em breve!
-          </p>
-        </div>
-      )}
-      <Search kind={kind} />
-    </S.Wrapper>
+    <S.HeaderWrapper variant={variant} data-testid="HP_HEADER">
+      <Container as="section" alignment={alignment}>
+        <Logo variant={variant} />
+        {isPrimary && (
+          <div>
+            <S.Title>Explore o Universo</S.Title>
+            <S.Description>
+              Mergulhe no domínio deslumbrante de todos os personagens clássicos que você
+              ama - e aqueles que você descobrirá em breve!
+            </S.Description>
+          </div>
+        )}
+        <Search margin="2rem 0 2rem 0" variant={variant} />
+      </Container>
+    </S.HeaderWrapper>
   );
 };
 
 Header.propTypes = {
-  kind: oneOf(['primary', 'secondary']),
+  variant: oneOf(['primary', 'secondary']),
 };
 
 Header.defaultProps = {
-  kind: 'primary',
+  variant: 'primary',
 };
 
 export { Header };

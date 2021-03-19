@@ -1,5 +1,6 @@
 import { object } from 'prop-types';
 
+import { Container } from 'components/UI';
 import { Footer, Header } from 'components/Layout';
 
 const PageHero = ({ match, location }) => {
@@ -12,11 +13,11 @@ const PageHero = ({ match, location }) => {
 
   return (
     <>
-      <Header kind="secondary" />
-      <main>
+      <Header variant="secondary" />
+      <Container as="main">
         <h1>PageHero</h1>
         <h2>HeroId: {heroId}</h2>
-      </main>
+      </Container>
       <Footer />
     </>
   );
