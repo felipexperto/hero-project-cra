@@ -1,13 +1,6 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 
-export const HeaderWrapper = styled.header`
-  display: flex;
-  flex-direction: ${({ variant }) => (variant === 'primary' ? 'column' : 'row')};
-
-  [data-icon='svg-icon'] {
-    margin: 2rem 0 1rem 0;
-  }
-`;
+export const HeaderWrapper = styled.header``;
 
 export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.darkgrey};
@@ -19,4 +12,35 @@ export const Title = styled.h1`
 export const Description = styled.p`
   color: ${({ theme }) => theme.colors.grey};
   margin-top: 0.5rem;
+`;
+
+export const Box = styled.div`
+  display: flex;
+
+  ${({ alignment }) =>
+    alignment &&
+    css`
+      display: flex;
+      flex-direction: ${alignment};
+    `}
+
+  ${({ variant }) =>
+    variant === 'primary'
+      ? css`
+          flex-direction: column;
+        `
+      : css`
+          flex-direction: row;
+
+          > div {
+            width: 30%;
+          }
+          > form {
+            width: 70%;
+          }
+        `}
+
+  [data-icon='svg-icon'] {
+    margin: 2rem 0 1rem 0;
+  }
 `;

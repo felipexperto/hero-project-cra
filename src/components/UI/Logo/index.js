@@ -1,11 +1,22 @@
-import { SuperHeroLogo } from 'images/logos';
+import { oneOf } from 'prop-types';
 
-const Logo = () => {
+import { SuperHeroLogo } from 'images/logos';
+import * as S from './styles';
+
+const Logo = ({ variant }) => {
   return (
-    <div data-testid="HP_LOGO">
+    <S.LogoWrapper variant={variant} data-testid="HP_LOGO">
       <SuperHeroLogo data-icon="svg-icon" />
-    </div>
+    </S.LogoWrapper>
   );
+};
+
+Logo.propTypes = {
+  variant: oneOf(['primary', 'secondary']),
+};
+
+Logo.defaultProps = {
+  variant: 'primary',
 };
 
 export { Logo };

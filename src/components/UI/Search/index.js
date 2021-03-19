@@ -3,10 +3,9 @@ import { oneOf, string } from 'prop-types';
 import { Search as SearchIcon } from 'images/icons';
 import * as S from './styles';
 
-const Search = ({ margin, variant }) => {
+const Search = ({ variant }) => {
   return (
-    <S.SearchWrapper margin={margin} data-testid="HP_SEARCH">
-      {/* <label for="site-search">Search the site:</label> */}
+    <S.SearchWrapper data-testid="HP_SEARCH">
       <S.SearchGroup>
         <S.SearchInput
           aria-label="Procure por heróis"
@@ -14,7 +13,7 @@ const Search = ({ margin, variant }) => {
           type="search"
           variant={variant}
         />
-        <S.SearchButton>
+        <S.SearchButton variant={variant}>
           <SearchIcon data-icon="icon-svg" />
         </S.SearchButton>
       </S.SearchGroup>
