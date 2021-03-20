@@ -1,10 +1,13 @@
+import React, { useContext } from 'react';
 import { oneOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import { SearchContext } from 'contexts';
 import { Container, Logo, Search } from 'components/UI';
 import * as S from './styles';
 
 const Header = ({ variant }) => {
+  const { search, setSearch } = useContext(SearchContext);
   const isPrimary = variant === 'primary';
   const alignment = isPrimary ? 'column' : 'row';
 
@@ -26,7 +29,7 @@ const Header = ({ variant }) => {
               </S.Description>
             </div>
           )}
-          <Search variant={variant} />
+          <Search value={search} setValue={setSearch} variant={variant} />
         </S.Box>
       </Container>
     </S.HeaderWrapper>
