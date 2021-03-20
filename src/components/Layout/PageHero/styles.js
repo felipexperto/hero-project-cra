@@ -18,12 +18,18 @@ export const Details = styled.section`
   > div:first-child {
     flex: 1;
     ${media.tablet`
+      flex-basis: 40%;
+    `}
+    ${media.desktop`
       flex-basis: 30%;
     `}
   }
   > div:last-child {
     flex: 1;
     ${media.tablet`
+      flex-basis: 60%;
+    `}
+    ${media.desktop`
       flex-basis: 70%;
     `}
   }
@@ -100,6 +106,7 @@ export const Image = styled.img`
 
   ${media.tablet`
     margin: 3rem;
+    margin-right: 0;
     width: auto;
   `}
 `;

@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { object } from 'prop-types';
 
+import { useLocalStorage } from 'hooks';
 import { isArrayFilled, isObjectFilled } from 'utils/helpers';
 import { getCharacter, getComics } from 'services';
 import { ButtonFavorite, Container } from 'components/UI';
@@ -12,11 +14,34 @@ const PageHero = ({ match }) => {
   const {
     params: { heroId },
   } = match;
+  const [character, setCharacter] = useState({});
   const [characterId] = useState(heroId);
   const [characterDetails, setCharacterDetails] = useState({});
+  const [isCharacterAmongFavorites, setIsCharacterAmongFavorites] = useState(false);
+  const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
+    'hp_favorite_characters',
+    []
+  );
   const [comics, setComics] = useState([]);
-
   // const [validComics, setValidComics] = useState([]);
+  const [iconType, setIconType] = useState('');
+
+  const addCharacterToFavorites = (character) =>
+    setStoredFavoriteCharacters((prevState) => [...prevState, { ...character }]);
+
+  const removeCharacterFromFavorites = (character) => {
+    setStoredFavoriteCharacters((prevState) =>
+      prevState.filter((el) => el.id !== character.id)
+    );
+  };
+
+  const handleClick = (character) => {
+    if (isCharacterAmongFavorites) {
+      removeCharacterFromFavorites(character);
+      return;
+    }
+    addCharacterToFavorites(character);
+  };
 
   useEffect(() => {
     const getCharacterResult = async (id) => {
@@ -31,6 +56,25 @@ const PageHero = ({ match }) => {
     };
     getComicsResult(characterId, 'orderBy=-onsaleDate');
   }, [characterId]);
+
+  useEffect(() => {
+    const { id, name, thumbnail } = characterDetails;
+    setCharacter(() => ({
+      id,
+      name,
+      thumbnail,
+    }));
+  }, [characterDetails]);
+
+  useEffect(() => {
+    setIsCharacterAmongFavorites(() =>
+      storedFavoriteCharacters.some((el) => parseInt(el.id) === parseInt(character.id))
+    );
+  }, [storedFavoriteCharacters, character]);
+
+  useEffect(() => {
+    isCharacterAmongFavorites ? setIconType('filled') : setIconType('outline');
+  }, [isCharacterAmongFavorites]);
 
   // useEffect(() => {
   //   console.log(comics);
@@ -51,10 +95,11 @@ const PageHero = ({ match }) => {
                 <S.DetailsHeader>
                   <S.Name>{characterDetails.name}</S.Name>
                   <ButtonFavorite
-                    character={{
-                      id: characterDetails.id,
-                      name: characterDetails.name,
-                      thumbnail: characterDetails.thumbnail,
+                    iconType={iconType}
+                    handleClick={(event) => {
+                      event.preventDefault();
+                      console.log(character);
+                      handleClick(character);
                     }}
                     height={'32px'}
                     width={'32px'}
@@ -97,6 +142,7 @@ const PageHero = ({ match }) => {
           <>
             <S.OnSale>
               <S.OnSaleTitle>Últimos lançamentos</S.OnSaleTitle>
+              {/* // e se não houverem 10 itens??? */}
               {comics.slice(0, 10).map((item) => {
                 const {
                   title,
