@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 
+import { useLocalStorage } from 'hooks';
 import { SearchContext } from 'contexts';
 import { sortCharactersArray } from 'utils/helpers';
 import { getCharacters } from 'services';
-import { List, Toggle } from 'components/UI';
+import { ListHeroes } from 'components/Layout';
+import { Toggle } from 'components/UI';
 import { HeartFilled, SuperHero } from 'images/icons';
 import * as S from './styles';
 
@@ -17,6 +19,8 @@ const SectionHeroes = () => {
   const [charactersLength, setCharactersLength] = useState(0);
   const [charactersArr, setCharactersArr] = useState([]);
   const [charactersShouldBeOrdered, setCharactersShouldBeOrdered] = useState(false);
+  const [charactersShouldBeFavorites, setCharactersShouldBeFavorites] = useState(false);
+  const [storedFavoriteCharacters] = useLocalStorage('hp_favorite_characters', []);
   const isSearchFieldEmpty = !search || search === '';
 
   useEffect(() => {
@@ -36,8 +40,13 @@ const SectionHeroes = () => {
     setCharactersLength(() => charactersArr.length);
   }, [charactersArr]);
 
+  const shouldBeRendered = () => {
+    const items = charactersShouldBeFavorites ? storedFavoriteCharacters : charactersArr;
+    return charactersShouldBeOrdered ? sortCharactersArray(items) : items;
+  };
+
   return (
-    <S.SectionHerosWrapper>
+    <S.SectionHeroesWrapper>
       <S.Menubar>
         <S.MenubarColumn>
           <S.HeroesCount>Encontrados {charactersLength} heróis</S.HeroesCount>
@@ -53,20 +62,17 @@ const SectionHeroes = () => {
             </button>
           </S.OrderByNameContainer>
           <S.ShowFavoritesContainer>
-            <button>
+            <button
+              onClick={() => setCharactersShouldBeFavorites((prevState) => !prevState)}
+            >
               <HeartFilled data-icon="icon-svg" />
               <span>Somente favoritos</span>
             </button>
           </S.ShowFavoritesContainer>
         </S.MenubarColumn>
       </S.Menubar>
-      <List
-        as="ol"
-        itemsArr={
-          charactersShouldBeOrdered ? sortCharactersArray(charactersArr) : charactersArr
-        }
-      />
-    </S.SectionHerosWrapper>
+      <ListHeroes itemsArr={shouldBeRendered()} />
+    </S.SectionHeroesWrapper>
   );
 };
 

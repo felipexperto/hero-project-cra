@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const SectionHerosWrapper = styled.div``;
+export const SectionHeroesWrapper = styled.div``;
 
 export const HeroesCount = styled.div`
   color: ${({ theme }) => theme.colors.grey};

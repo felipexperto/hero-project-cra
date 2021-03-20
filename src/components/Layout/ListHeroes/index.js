@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { array, oneOf } from 'prop-types';
+import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { useLocalStorage } from 'hooks';
@@ -9,7 +9,7 @@ import * as S from './styles';
 
 const isCharacterAmongFavorites = (arr, id) => arr.some((el) => el.id === id);
 
-const List = ({ as, itemsArr }) => {
+const ListHeroes = ({ itemsArr }) => {
   const [items, setItems] = useState(itemsArr);
   const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
     'hp_favorite_characters',
@@ -40,7 +40,7 @@ const List = ({ as, itemsArr }) => {
 
   return (
     <S.ListWrapper>
-      <S.List as={as}>
+      <S.List>
         {isArrayFilled(items) &&
           items.map((item, index) => {
             const { id, name, thumbnail } = item;
@@ -80,17 +80,13 @@ const List = ({ as, itemsArr }) => {
   );
 };
 
-List.propTypes = {
+ListHeroes.propTypes = {
   /** Define a lista a ser renderizada */
   itemsArr: array,
-
-  /** Define o elemento html renderizado */
-  as: oneOf(['ul', 'ol']),
 };
 
-List.defaultProps = {
+ListHeroes.defaultProps = {
   itemsArr: [],
-  as: 'ul',
 };
 
-export { List };
+export { ListHeroes };
