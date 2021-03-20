@@ -40,7 +40,7 @@ export const Box = styled.div`
           }
         `}
 
-  [data-icon='svg-icon'] {
+  [data-icon='icon-svg'] {
     margin: 2rem 0 1rem 0;
   }
 `;

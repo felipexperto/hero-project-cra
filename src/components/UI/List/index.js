@@ -1,9 +1,17 @@
+import { useEffect, useState } from 'react';
 import { array, oneOf } from 'prop-types';
 
 import { isArrayFilled } from 'utils/helpers';
 import * as S from './styles';
 
-const List = ({ as, items }) => {
+const List = ({ as, itemsArr }) => {
+  console.log('List', { itemsArr });
+  const [items, setItems] = useState(itemsArr);
+
+  useEffect(() => {
+    setItems(() => itemsArr);
+  }, [itemsArr]);
+
   return (
     <S.ListWrapper>
       <S.List as={as}>
@@ -31,13 +39,14 @@ const List = ({ as, items }) => {
 };
 
 List.propTypes = {
-  items: array,
+  itemsArr: array,
 
   /** Define o elemento html renderizado */
   as: oneOf(['ul', 'ol']),
 };
 
 List.defaultProps = {
+  itemsArr: [],
   as: 'ul',
 };
 
