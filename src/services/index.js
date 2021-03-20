@@ -1,3 +1,5 @@
 import { getCharacters } from './characters';
+import { getCharacter } from './character';
+import { getComics } from './comics';
 
-export { getCharacters };
+export { getCharacters, getCharacter, getComics };

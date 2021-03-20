@@ -22,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
   html,
   body {
     font-family: ${main.fonts.family};
+    line-height: 1.4em;
     margin: 0;
     padding: 0;
   }
