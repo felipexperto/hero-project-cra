@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { oneOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { SearchContext } from 'contexts';
+import { HeroesListContext, SearchContext } from 'contexts';
 import { Container, Logo, Search } from 'components/UI';
 import * as S from './styles';
 
 const Header = ({ variant }) => {
+  const { heroesList } = useContext(HeroesListContext);
   const { search, setSearch } = useContext(SearchContext);
   const isPrimary = variant === 'primary';
   const alignment = isPrimary ? 'column' : 'row';
@@ -29,7 +30,12 @@ const Header = ({ variant }) => {
               </S.Description>
             </div>
           )}
-          <Search value={search} setValue={setSearch} variant={variant} />
+          <Search
+            disabled={heroesList.hearted}
+            value={search}
+            setValue={setSearch}
+            variant={variant}
+          />
         </S.Box>
       </Container>
     </S.HeaderWrapper>

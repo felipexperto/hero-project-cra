@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { useLocalStorage } from 'hooks';
-import { SearchContext } from 'contexts';
+import { HeroesListContext, SearchContext } from 'contexts';
 import { sortCharactersArray } from 'utils/helpers';
 import { getCharacters } from 'services';
 import { ListHeroes } from 'components/Layout';
 import { Toggle } from 'components/UI';
-import { HeartFilled, SuperHero } from 'images/icons';
+import { HeartFilled, HeartOutline, SuperHero } from 'images/icons';
 import * as S from './styles';
 
 const getCharactersResult = async (query, setHook) => {
@@ -15,11 +15,10 @@ const getCharactersResult = async (query, setHook) => {
 };
 
 const SectionHeroes = () => {
+  const { heroesList, setHeroesList } = useContext(HeroesListContext);
   const { search } = useContext(SearchContext);
   const [charactersLength, setCharactersLength] = useState(0);
   const [charactersArr, setCharactersArr] = useState([]);
-  const [charactersShouldBeOrdered, setCharactersShouldBeOrdered] = useState(false);
-  const [charactersShouldBeFavorites, setCharactersShouldBeFavorites] = useState(false);
   const [storedFavoriteCharacters] = useLocalStorage('hp_favorite_characters', []);
   const isSearchFieldEmpty = !search || search === '';
 
@@ -41,20 +40,27 @@ const SectionHeroes = () => {
   }, [charactersArr]);
 
   const shouldBeRendered = () => {
-    const items = charactersShouldBeFavorites ? storedFavoriteCharacters : charactersArr;
-    return charactersShouldBeOrdered ? sortCharactersArray(items) : items;
+    const items = heroesList.hearted ? storedFavoriteCharacters : charactersArr;
+    return heroesList.sort ? sortCharactersArray(items) : items;
   };
 
   return (
     <S.SectionHeroesWrapper>
       <S.Menubar>
         <S.MenubarColumn>
-          <S.HeroesCount>Encontrados {charactersLength} heróis</S.HeroesCount>
+          <S.HeroesCount>
+            {!heroesList.hearted && `Encontrados ${charactersLength} heróis`}
+          </S.HeroesCount>
         </S.MenubarColumn>
         <S.MenubarColumn>
           <S.OrderByNameContainer>
             <button
-              onClick={() => setCharactersShouldBeOrdered((prevState) => !prevState)}
+              onClick={() =>
+                setHeroesList((prevState) => {
+                  const { sort } = prevState;
+                  return { ...prevState, sort: !sort };
+                })
+              }
             >
               <SuperHero data-icon="icon-svg" />
               <span>Ordenar por nome - A/Z</span>
@@ -63,10 +69,21 @@ const SectionHeroes = () => {
           </S.OrderByNameContainer>
           <S.ShowFavoritesContainer>
             <button
-              onClick={() => setCharactersShouldBeFavorites((prevState) => !prevState)}
+              onClick={() =>
+                setHeroesList((prevState) => {
+                  const { hearted } = prevState;
+                  return { ...prevState, hearted: !hearted };
+                })
+              }
             >
-              <HeartFilled data-icon="icon-svg" />
-              <span>Somente favoritos</span>
+              {heroesList.hearted ? (
+                <HeartOutline data-icon="icon-svg" />
+              ) : (
+                <HeartFilled data-icon="icon-svg" />
+              )}
+              <span>
+                {heroesList.hearted ? 'Resultados da busca' : 'Somente favoritos'}
+              </span>
             </button>
           </S.ShowFavoritesContainer>
         </S.MenubarColumn>

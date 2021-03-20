@@ -1,21 +1,22 @@
-import { func, oneOf, string } from 'prop-types';
+import { bool, func, oneOf, string } from 'prop-types';
 
 import { Search as SearchIcon } from 'images/icons';
 import * as S from './styles';
 
-const Search = ({ value, setValue, variant }) => {
+const Search = ({ disabled, value, setValue, variant }) => {
   return (
     <S.SearchWrapper data-testid="HP_SEARCH">
       <S.SearchGroup>
         <S.SearchInput
           aria-label="Procure por heróis"
+          disabled={disabled}
+          onChange={(e) => setValue(e.target.value)}
           placeholder="Procure por heróis"
           type="search"
-          variant={variant}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          variant={variant}
         />
-        <S.SearchButton variant={variant}>
+        <S.SearchButton disabled={disabled} variant={variant}>
           <SearchIcon data-icon="icon-svg" />
         </S.SearchButton>
       </S.SearchGroup>
@@ -24,6 +25,7 @@ const Search = ({ value, setValue, variant }) => {
 };
 
 Search.propTypes = {
+  disabled: bool,
   margin: string,
   setValue: func,
   value: string,

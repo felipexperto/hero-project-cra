@@ -25,6 +25,11 @@ export const SearchInput = styled.input`
           padding: 0.75rem 0.75rem 0.75rem 6rem;
         `}
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
+
   &::placeholder {
     color: ${({ variant, theme }) =>
       variant === 'primary' ? theme.colors.red : theme.colors.grey};
@@ -42,6 +47,11 @@ export const SearchButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translate(50%, -45%);
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
 
   ${({ variant }) =>
     variant === 'primary'
