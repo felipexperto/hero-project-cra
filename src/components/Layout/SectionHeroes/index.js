@@ -1,23 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
+import { SearchContext } from 'contexts';
 import { sortCharactersArray } from 'utils/helpers';
 import { getCharacters } from 'services';
 import { List, Toggle } from 'components/UI';
 import { HeartFilled, SuperHero } from 'images/icons';
 import * as S from './styles';
 
+const getCharactersResult = async (query, setHook) => {
+  const { results } = await getCharacters(query);
+  setHook(() => results);
+};
+
 const SectionHeroes = () => {
+  const { search } = useContext(SearchContext);
   const [charactersLength, setCharactersLength] = useState(0);
   const [charactersArr, setCharactersArr] = useState([]);
   const [charactersShouldBeOrdered, setCharactersShouldBeOrdered] = useState(false);
+  const isSearchFieldEmpty = !search || search === '';
 
   useEffect(() => {
-    const getCharactersResult = async () => {
-      const { results } = await getCharacters('limit=20');
-      setCharactersArr(() => results);
-    };
-    getCharactersResult();
+    if (isSearchFieldEmpty) {
+      getCharactersResult('limit=20', setCharactersArr);
+      return;
+    }
+    getCharactersResult(`limit=100&nameStartsWith=${search}`, setCharactersArr);
   }, []);
+
+  useEffect(() => {
+    if (isSearchFieldEmpty) return;
+    getCharactersResult(`limit=100&nameStartsWith=${search}`, setCharactersArr);
+  }, [search]);
 
   useEffect(() => {
     setCharactersLength(() => charactersArr.length);
@@ -35,7 +48,7 @@ const SectionHeroes = () => {
               onClick={() => setCharactersShouldBeOrdered((prevState) => !prevState)}
             >
               <SuperHero data-icon="icon-svg" />
-              <span>Ordernar por nome - A/Z</span>
+              <span>Ordenar por nome - A/Z</span>
               <Toggle />
             </button>
           </S.OrderByNameContainer>
