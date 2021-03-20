@@ -7,7 +7,6 @@ import { isArrayFilled } from 'utils/helpers';
 import * as S from './styles';
 
 const List = ({ as, itemsArr }) => {
-  console.log('List', { itemsArr });
   const [items, setItems] = useState(itemsArr);
 
   useEffect(() => {
