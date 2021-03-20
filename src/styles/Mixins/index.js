@@ -5,7 +5,7 @@ export const resetButton = () => css`
   background: 0;
   border: 0;
   cursor: pointer;
-  line-height: 24px;
+  line-height: 1.4em;
   margin: 0;
   padding: 0;
 `;

@@ -30,6 +30,10 @@ const GlobalStyles = createGlobalStyle`
     overflow-anchor: none;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   img {
     max-width: 100%;
   }

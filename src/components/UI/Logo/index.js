@@ -5,7 +5,7 @@ import * as S from './styles';
 
 const Logo = ({ variant }) => {
   return (
-    <S.LogoWrapper variant={variant} data-testid="HP_LOGO">
+    <S.LogoWrapper variant={variant} data-logo data-testid="HP_LOGO">
       <SuperHeroLogo data-icon="icon-svg" />
     </S.LogoWrapper>
   );

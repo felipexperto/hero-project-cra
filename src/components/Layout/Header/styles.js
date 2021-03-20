@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components/macro';
 
 export const HeaderWrapper = styled.header``;
 
+export const LogoWrapper = styled.div``;
+
 export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.darkgrey};
   font-size: 2rem;
@@ -40,7 +42,7 @@ export const Box = styled.div`
           }
         `}
 
-  [data-icon='icon-svg'] {
+  [data-logo] {
     margin: 2rem 0 1rem 0;
   }
 `;

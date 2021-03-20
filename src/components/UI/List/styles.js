@@ -46,9 +46,16 @@ export const Image = styled.div`
   }
 `;
 
+export const Content = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 3rem 0;
+`;
+
 export const Name = styled.div`
   color: ${({ theme }) => theme.colors.darkgrey};
+  display: inline-block;
   font-weight: ${({ theme }) => theme.fonts.weight.bold};
-  margin: 1rem 0 3rem 0;
   text-align: left;
 `;

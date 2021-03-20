@@ -1,4 +1,5 @@
 import { oneOf } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { Container, Logo, Search } from 'components/UI';
 import * as S from './styles';
@@ -11,7 +12,11 @@ const Header = ({ variant }) => {
     <S.HeaderWrapper data-testid="HP_HEADER">
       <Container as="section">
         <S.Box variant={variant} alignment={alignment}>
-          <Logo variant={variant} />
+          <S.LogoWrapper>
+            <Link to={'/'} title="Marvel Search Heroes">
+              <Logo variant={variant} />
+            </Link>
+          </S.LogoWrapper>
           {isPrimary && (
             <div>
               <S.Title>Explore o Universo</S.Title>
