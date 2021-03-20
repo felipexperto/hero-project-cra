@@ -9,7 +9,7 @@ export const ButtonFavorite = styled.button`
   ${resetButton};
 
   [data-icon='icon-svg'] {
-    height: 16px;
-    width: 16px;
+    height: ${({ height }) => (height ? height : '16px')};
+    width: ${({ width }) => (width ? width : '16px')};
   }
 `;

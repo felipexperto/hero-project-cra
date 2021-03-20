@@ -6,7 +6,7 @@ export const WrapperPageHero = styled.section`
   background-color: ${({ theme }) => theme.colors.lightgreen};
 `;
 
-export const Details = styled.div`
+export const Details = styled.section`
   display: flex;
   flex-direction: column-reverse;
   margin-top: 4rem;
@@ -29,6 +29,21 @@ export const Details = styled.div`
   }
 `;
 
+export const DetailsHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+
+  > div {
+    padding-left: 16px;
+
+    button {
+      margin-top: 8px;
+    }
+  }
+`;
+
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,7 +52,11 @@ export const Column = styled.div`
 `;
 
 export const Name = styled.h1`
-  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  line-break: anywhere;
+  line-height: 1.2em;
+  margin: 0;
+  text-transform: uppercase;
 `;
 
 export const Description = styled.div`
@@ -64,7 +83,7 @@ export const Rating = styled.div``;
 
 export const LastComic = styled.div``;
 
-export const onSale = styled.div`
+export const OnSale = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

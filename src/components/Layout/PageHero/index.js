@@ -3,7 +3,7 @@ import { object } from 'prop-types';
 
 import { isArrayFilled, isObjectFilled } from 'utils/helpers';
 import { getCharacter, getComics } from 'services';
-import { Container } from 'components/UI';
+import { ButtonFavorite, Container } from 'components/UI';
 import { Footer, Header } from 'components/Layout';
 import { Book, Video } from 'images/icons';
 import * as S from './styles';
@@ -15,6 +15,7 @@ const PageHero = ({ match }) => {
   const [characterId] = useState(heroId);
   const [characterDetails, setCharacterDetails] = useState({});
   const [comics, setComics] = useState([]);
+
   // const [validComics, setValidComics] = useState([]);
 
   useEffect(() => {
@@ -47,7 +48,18 @@ const PageHero = ({ match }) => {
           <>
             <S.Details>
               <S.Column>
-                <S.Name>{characterDetails.name}</S.Name>
+                <S.DetailsHeader>
+                  <S.Name>{characterDetails.name}</S.Name>
+                  <ButtonFavorite
+                    character={{
+                      id: characterDetails.id,
+                      name: characterDetails.name,
+                      thumbnail: characterDetails.thumbnail,
+                    }}
+                    height={'32px'}
+                    width={'32px'}
+                  />
+                </S.DetailsHeader>
                 <S.Description>{characterDetails.description}</S.Description>
                 <S.Events>
                   <S.Comics>
@@ -83,7 +95,7 @@ const PageHero = ({ match }) => {
         )}
         {isArrayFilled(comics) && (
           <>
-            <S.onSale>
+            <S.OnSale>
               <S.OnSaleTitle>Últimos lançamentos</S.OnSaleTitle>
               {comics.slice(0, 10).map((item) => {
                 const {
@@ -97,7 +109,7 @@ const PageHero = ({ match }) => {
                   </>
                 );
               })}
-            </S.onSale>
+            </S.OnSale>
           </>
         )}
       </Container>
