@@ -15,3 +15,13 @@ export const resetList = () => css`
   margin: 0;
   padding: 0;
 `;
+
+export const visuallyHidden = () => css`
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+`;

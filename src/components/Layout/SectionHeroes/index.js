@@ -9,7 +9,7 @@ import { Toggle } from 'components/UI';
 import { HeartFilled, HeartOutline, SuperHero } from 'images/icons';
 import * as S from './styles';
 
-const getCharactersResult = async (query, setHook) => {
+const getHeroes = async (setHook, query = 'limit=20') => {
   const { results } = await getCharacters(query);
   setHook((prevState) => {
     return { ...prevState, heroes: results };
@@ -24,23 +24,28 @@ const SectionHeroes = () => {
   const [storedFavoriteCharacters] = useLocalStorage('hp_favorite_characters', []);
   const isSearchFieldEmpty = !search || search === '';
 
+  const applyFilterToList = () => {
+    const items = heroesList.hearted ? heroesList.favorites : heroesList.heroes;
+    const filteredItems = heroesList.sort ? sortCharactersArray(items) : items;
+    setRenderItems(() => filteredItems);
+  };
+
+  useEffect(() => {
+    console.log({ isSearchFieldEmpty });
+    isSearchFieldEmpty
+      ? getHeroes(setHeroesList)
+      : getHeroes(setHeroesList, `limit=100&nameStartsWith=${search}`);
+  }, []);
+
   useEffect(() => {
     setHeroesList((prevState) => {
       return { ...prevState, favorites: storedFavoriteCharacters };
     });
   }, [storedFavoriteCharacters]);
 
-  useEffect(async () => {
-    if (isSearchFieldEmpty) {
-      await getCharactersResult('limit=20', setHeroesList);
-      return;
-    }
-    await getCharactersResult(`limit=100&nameStartsWith=${search}`, setHeroesList);
-  }, []);
-
-  useEffect(async () => {
+  useEffect(() => {
     if (isSearchFieldEmpty) return;
-    await getCharactersResult(`limit=100&nameStartsWith=${search}`, setHeroesList);
+    getHeroes(setHeroesList, `limit=100&nameStartsWith=${search}`);
   }, [search]);
 
   useEffect(() => {
@@ -48,10 +53,8 @@ const SectionHeroes = () => {
   }, [heroesList.heroes]);
 
   useEffect(() => {
-    const items = heroesList.hearted ? heroesList.favorites : heroesList.heroes;
-    const filteredItems = heroesList.sort ? sortCharactersArray(items) : items;
-    setRenderItems(() => filteredItems);
-  }, [heroesList.hearted, heroesList.sort]);
+    applyFilterToList();
+  }, [heroesList.heroes, heroesList.hearted, heroesList.sort]);
 
   return (
     <S.SectionHeroesWrapper>
