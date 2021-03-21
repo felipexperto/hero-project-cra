@@ -1,3 +1,9 @@
+import { HeroesListContext, HeroesListContextProvider } from './heroeslist.context';
 import { SearchContext, SearchContextProvider } from './search.context';
 
-export { SearchContext, SearchContextProvider };
+export {
+  HeroesListContext,
+  HeroesListContextProvider,
+  SearchContext,
+  SearchContextProvider,
+};

@@ -1,12 +1,14 @@
 import styled from 'styled-components/macro';
 
-import { media } from 'styles';
+import { media, Mixins } from 'styles';
+
+const { resetList, visuallyHidden } = Mixins;
 
 export const WrapperPageHero = styled.section`
   background-color: ${({ theme }) => theme.colors.lightgreen};
 `;
 
-export const Details = styled.div`
+export const Details = styled.section`
   display: flex;
   flex-direction: column-reverse;
   margin-top: 4rem;
@@ -18,14 +20,35 @@ export const Details = styled.div`
   > div:first-child {
     flex: 1;
     ${media.tablet`
+      flex-basis: 40%;
+    `}
+    ${media.desktop`
       flex-basis: 30%;
     `}
   }
   > div:last-child {
     flex: 1;
     ${media.tablet`
+      flex-basis: 60%;
+    `}
+    ${media.desktop`
       flex-basis: 70%;
     `}
+  }
+`;
+
+export const DetailsHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+
+  > div {
+    padding-left: 16px;
+
+    button {
+      margin-top: 8px;
+    }
   }
 `;
 
@@ -37,7 +60,11 @@ export const Column = styled.div`
 `;
 
 export const Name = styled.h1`
-  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  line-break: anywhere;
+  line-height: 1.2em;
+  margin: 0;
+  text-transform: uppercase;
 `;
 
 export const Description = styled.div`
@@ -46,25 +73,34 @@ export const Description = styled.div`
 
 export const Events = styled.div``;
 
-export const Comics = styled.div`
+export const Comics = styled.div``;
+
+export const ComicsTitle = styled.strong`
+  display: block;
+`;
+
+export const ComicsContent = styled.div`
+  align-items: center;
+  display: flex;
+
   [data-icon='icon-svg'] {
     height: 16px;
+    margin-right: 0.25rem;
     width: 16px;
   }
 `;
 
-export const Movies = styled.div`
-  [data-icon='icon-svg'] {
-    height: 16px;
-    width: 16px;
-  }
+export const LastComic = styled.div`
+  margin-top: 1rem;
 `;
 
-export const Rating = styled.div``;
+export const LastComicTitle = styled.strong`
+  margin-right: 0.25rem;
+`;
 
-export const LastComic = styled.div``;
+export const LastComicContent = styled.span``;
 
-export const onSale = styled.div`
+export const OnSale = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -73,7 +109,9 @@ export const onSale = styled.div`
   width: 100%;
 `;
 
-export const OnSaleTitle = styled.h2``;
+export const OnSaleTitle = styled.h2`
+  margin-bottom: 3rem;
+`;
 
 export const Image = styled.img`
   margin: 0 auto;
@@ -81,6 +119,45 @@ export const Image = styled.img`
 
   ${media.tablet`
     margin: 3rem;
+    margin-right: 0;
     width: auto;
   `}
+`;
+
+export const FavoriteIndicator = styled.div`
+  span {
+    ${visuallyHidden};
+  }
+  [data-icon='icon-svg'] {
+    height: 32px;
+    margin-top: 0.5rem;
+    opacity: 0.5;
+    width: 32px;
+  }
+`;
+
+export const OnSaleList = styled.ol`
+  ${resetList};
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const OnSaleListItem = styled.li`
+  flex-basis: calc((100% / 3) - 5%);
+  margin: 0 2.5% 1rem 2.5%;
+
+  ${media.tablet`
+    flex-basis: calc((100% / 4) - 5%);
+  `}
+  ${media.desktop`
+    flex-basis: calc((100% / 5) - 5%);
+  `}
+  ${media.largeDesktop`
+    flex-basis: calc((100% / 6) - 5%);
+  `}
+
+  > h3 {
+    font-size: 0.8rem;
+    font-weight: ${({ theme }) => theme.fonts.weight.bold};
+  }
 `;

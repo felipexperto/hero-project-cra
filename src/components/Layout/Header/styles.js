@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 
 export const HeaderWrapper = styled.header``;
 
@@ -18,29 +18,7 @@ export const Description = styled.p`
 
 export const Box = styled.div`
   display: flex;
-
-  ${({ alignment }) =>
-    alignment &&
-    css`
-      display: flex;
-      flex-direction: ${alignment};
-    `}
-
-  ${({ variant }) =>
-    variant === 'primary'
-      ? css`
-          flex-direction: column;
-        `
-      : css`
-          flex-direction: row;
-
-          > div {
-            width: 30%;
-          }
-          > form {
-            width: 70%;
-          }
-        `}
+  flex-direction: column;
 
   [data-logo] {
     margin: 2rem 0 1rem 0;

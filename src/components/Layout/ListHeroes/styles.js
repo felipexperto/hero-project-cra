@@ -1,14 +1,14 @@
 import styled from 'styled-components/macro';
-import { media } from 'styles';
+import { media, Mixins } from 'styles';
+
+const { resetList } = Mixins;
 
 export const ListWrapper = styled.div``;
 
 export const List = styled.ol`
+  ${resetList}
   display: flex;
   flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 `;
 
 export const ListItem = styled.li`
