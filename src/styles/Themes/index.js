@@ -5,6 +5,7 @@ const colors = {
   lightred: '#fdecec',
   lightgreen: '#e7f6e7',
   transparent: 'transparent',
+  lightestgrey: '#e4e5e9',
   lightgrey: '#b9b9b9',
   grey: '#8c8c8c',
   darkgrey: '#404040',

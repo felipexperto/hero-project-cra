@@ -69,12 +69,6 @@ const ListHeroes = ({ itemsArr }) => {
             const { id, name, thumbnail } = item;
             const { path, extension } = thumbnail;
             const character = { id, name, thumbnail };
-
-            // console.log(
-            //   { id, name, thumbnail, path, extension },
-            //   isHeroAmongFavorites(heroesList.heroes, id)
-            // );
-            // const iconType = isHeroAmongFavorites(storedFavoriteCharacters, id)
             const iconType = isHeroAmongFavorites(heroesList.favorites, id)
               ? 'filled'
               : 'outline';
