@@ -31,7 +31,6 @@ const SectionHeroes = () => {
   };
 
   useEffect(() => {
-    console.log({ isSearchFieldEmpty });
     isSearchFieldEmpty
       ? getHeroes(setHeroesList)
       : getHeroes(setHeroesList, `limit=100&nameStartsWith=${search}`);
