@@ -98,7 +98,7 @@ const PageHero = ({ match }) => {
                     iconType={iconType}
                     handleClick={(event) => {
                       event.preventDefault();
-                      console.log(character);
+                      // console.log(character);
                       handleClick(character);
                     }}
                     height={'32px'}

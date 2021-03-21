@@ -11,56 +11,96 @@ import * as S from './styles';
 
 const getCharactersResult = async (query, setHook) => {
   const { results } = await getCharacters(query);
-  setHook(() => results);
+  console.log({ results });
+  setHook((prevState) => {
+    return { ...prevState, heroes: results };
+  });
 };
 
 const SectionHeroes = () => {
   const { heroesList, setHeroesList } = useContext(HeroesListContext);
   const { search } = useContext(SearchContext);
-  const [charactersLength, setCharactersLength] = useState(0);
-  const [charactersArr, setCharactersArr] = useState([]);
+  const [exibirItens, setExibirItens] = useState([]);
+  const [heroesFoundInSearchQuantity, setHeroesFoundInSearchQuantity] = useState(0);
   const [storedFavoriteCharacters] = useLocalStorage('hp_favorite_characters', []);
   const isSearchFieldEmpty = !search || search === '';
 
-  useEffect(() => {
-    if (isSearchFieldEmpty) {
-      getCharactersResult('limit=20', setCharactersArr);
-      return;
-    }
-    getCharactersResult(`limit=100&nameStartsWith=${search}`, setCharactersArr);
-  }, []);
+  // useEffect(() => {
+  // console.log({ heroesList });
+  // }, [heroesList]);
 
   useEffect(() => {
+    console.log('heroesList', { heroesList });
+    console.log('exibirItens', { exibirItens });
+  }, [exibirItens]);
+
+  useEffect(() => {
+    console.log('useEffect storedFavoriteCharacters', { storedFavoriteCharacters });
+    setHeroesList((prevState) => {
+      return { ...prevState, favorites: storedFavoriteCharacters };
+    });
+  }, [storedFavoriteCharacters]);
+
+  useEffect(async () => {
+    if (isSearchFieldEmpty) {
+      await getCharactersResult('limit=20&orderBy=-name', setHeroesList);
+      return;
+    }
+    await getCharactersResult(`limit=100&nameStartsWith=${search}`, setHeroesList);
+  }, []);
+
+  useEffect(async () => {
     if (isSearchFieldEmpty) return;
-    getCharactersResult(`limit=100&nameStartsWith=${search}`, setCharactersArr);
+    await getCharactersResult(`limit=100&nameStartsWith=${search}`, setHeroesList);
   }, [search]);
 
   useEffect(() => {
-    setCharactersLength(() => charactersArr.length);
-  }, [charactersArr]);
+    setHeroesFoundInSearchQuantity(() => heroesList.heroes.length);
+  }, [heroesList.heroes]);
 
-  const shouldBeRendered = () => {
-    const items = heroesList.hearted ? storedFavoriteCharacters : charactersArr;
-    return heroesList.sort ? sortCharactersArray(items) : items;
-  };
+  useEffect(() => {
+    console.log(
+      'useEffect heroesList.hearted',
+      heroesList.hearted,
+      heroesList.favorites,
+      heroesList.heroes
+    );
+    const items = heroesList.hearted ? heroesList.favorites : heroesList.heroes;
+    const filteredItems = heroesList.sort ? sortCharactersArray(items) : items;
+    setExibirItens(() => filteredItems);
+  }, [heroesList.hearted, heroesList.sort]);
+
+  // useEffect(() => {
+  // setExibirItens((prevState) => heroesList.sort ? sortCharactersArray(prevState) : prevState);
+  // const items = heroesList.hearted ? heroesList.favorites : heroesList.heroes;
+  // const filteredItems = heroesList.sort ? sortCharactersArray(items) : items;
+  // setExibirItens(() => (heroesList.sort ? sortCharactersArray(items) : items));
+  // }, [heroesList.sort]);
+
+  // const shouldBeRendered = () => {
+  //   const items = heroesList.hearted ? heroesList.favorites : heroesList.heroes;
+  //   const filteredItems = heroesList.sort ? sortCharactersArray(items) : items;
+  //   return filteredItems;
+  // };
 
   return (
     <S.SectionHeroesWrapper>
       <S.Menubar>
         <S.MenubarColumn>
           <S.HeroesCount>
-            {!heroesList.hearted && `Encontrados ${charactersLength} heróis`}
+            {!heroesList.hearted && `Encontrados ${heroesFoundInSearchQuantity} heróis`}
           </S.HeroesCount>
         </S.MenubarColumn>
         <S.MenubarColumn>
           <S.OrderByNameContainer>
             <button
-              onClick={() =>
+              onClick={(event) => {
+                event.preventDefault();
                 setHeroesList((prevState) => {
                   const { sort } = prevState;
                   return { ...prevState, sort: !sort };
-                })
-              }
+                });
+              }}
             >
               <SuperHero data-icon="icon-svg" />
               <span>Ordenar por nome - A/Z</span>
@@ -69,12 +109,14 @@ const SectionHeroes = () => {
           </S.OrderByNameContainer>
           <S.ShowFavoritesContainer>
             <button
-              onClick={() =>
+              onClick={(event) => {
+                event.preventDefault();
                 setHeroesList((prevState) => {
                   const { hearted } = prevState;
+                  console.log('button', { ...prevState, hearted: !hearted });
                   return { ...prevState, hearted: !hearted };
-                })
-              }
+                });
+              }}
             >
               {heroesList.hearted ? (
                 <HeartOutline data-icon="icon-svg" />
@@ -88,7 +130,7 @@ const SectionHeroes = () => {
           </S.ShowFavoritesContainer>
         </S.MenubarColumn>
       </S.Menubar>
-      <ListHeroes itemsArr={shouldBeRendered()} />
+      <ListHeroes itemsArr={exibirItens} />
     </S.SectionHeroesWrapper>
   );
 };

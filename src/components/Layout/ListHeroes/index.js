@@ -1,33 +1,53 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { useLocalStorage } from 'hooks';
+// import { useLocalStorage } from 'hooks';
+import { HeroesListContext } from 'contexts';
 import { isArrayFilled } from 'utils/helpers';
 import { ButtonFavorite } from 'components/UI';
 import * as S from './styles';
 
-const isCharacterAmongFavorites = (arr, id) => arr.some((el) => el.id === id);
+const isHeroAmongFavorites = (arr, id) =>
+  arr.some((el) => {
+    return el.id === id;
+  });
 
 const ListHeroes = ({ itemsArr }) => {
-  const [items, setItems] = useState(itemsArr);
-  const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
-    'hp_favorite_characters',
-    []
-  );
+  // console.log({ itemsArr });
+  const { heroesList, setHeroesList } = useContext(HeroesListContext);
+  const [items, setItems] = useState([]);
+  // const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
+  //   'hp_favorite_characters',
+  //   []
+  // );
 
   const addCharacterToFavorites = (character) =>
-    setStoredFavoriteCharacters((prevState) => [...prevState, { ...character }]);
+    setHeroesList((prevState) => {
+      console.log('addCharacterToFavorites');
+      const { favorites } = prevState;
+      if (favorites.length > 4) return;
+      if (isHeroAmongFavorites(heroesList.favorites, character.id)) return;
+      favorites.push(character);
+      return { ...prevState, favorites };
+    });
+  // setStoredFavoriteCharacters((prevState) => [...prevState, { ...character }]);
 
   const removeCharacterFromFavorites = (character) => {
-    setStoredFavoriteCharacters((prevState) =>
-      prevState.filter((el) => el.id !== character.id)
-    );
+    // setStoredFavoriteCharacters((prevState) =>
+    //   prevState.filter((el) => el.id !== character.id)
+    // );
+    setHeroesList((prevState) => {
+      const { favorites } = prevState;
+      favorites.filter((el) => el.id !== character.id);
+      return { ...prevState, favorites };
+    });
   };
 
   const handleClick = (character) => {
     const { id } = character;
-    if (isCharacterAmongFavorites(storedFavoriteCharacters, id)) {
+    // if (isHeroAmongFavorites(storedFavoriteCharacters, id)) {
+    if (isHeroAmongFavorites(heroesList.favorites, id)) {
       removeCharacterFromFavorites(character);
       return;
     }
@@ -36,6 +56,9 @@ const ListHeroes = ({ itemsArr }) => {
 
   useEffect(() => {
     setItems(() => itemsArr);
+    // setHeroesList((prevState) => {
+    //   return { ...prevState, heroes: itemsArr };
+    // });
   }, [itemsArr]);
 
   return (
@@ -46,7 +69,13 @@ const ListHeroes = ({ itemsArr }) => {
             const { id, name, thumbnail } = item;
             const { path, extension } = thumbnail;
             const character = { id, name, thumbnail };
-            const iconType = isCharacterAmongFavorites(storedFavoriteCharacters, id)
+
+            // console.log(
+            //   { id, name, thumbnail, path, extension },
+            //   isHeroAmongFavorites(heroesList.heroes, id)
+            // );
+            // const iconType = isHeroAmongFavorites(storedFavoriteCharacters, id)
+            const iconType = isHeroAmongFavorites(heroesList.favorites, id)
               ? 'filled'
               : 'outline';
 
