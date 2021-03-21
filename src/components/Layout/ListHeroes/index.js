@@ -1,72 +1,26 @@
 import { useContext, useEffect, useState } from 'react';
-import { array } from 'prop-types';
+import { array, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-// import { useLocalStorage } from 'hooks';
 import { HeroesListContext } from 'contexts';
 import { isArrayFilled } from 'utils/helpers';
 import { ButtonFavorite } from 'components/UI';
 import * as S from './styles';
 
-const isHeroAmongFavorites = (arr, id) =>
-  arr.some((el) => {
-    return el.id === id;
-  });
-
-const ListHeroes = ({ itemsArr }) => {
-  // console.log({ itemsArr });
-  const { heroesList, setHeroesList } = useContext(HeroesListContext);
-  const [items, setItems] = useState([]);
-  // const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
-  //   'hp_favorite_characters',
-  //   []
-  // );
-
-  const addCharacterToFavorites = (character) =>
-    setHeroesList((prevState) => {
-      console.log('addCharacterToFavorites');
-      const { favorites } = prevState;
-      if (favorites.length > 4) return;
-      if (isHeroAmongFavorites(heroesList.favorites, character.id)) return;
-      favorites.push(character);
-      return { ...prevState, favorites };
-    });
-  // setStoredFavoriteCharacters((prevState) => [...prevState, { ...character }]);
-
-  const removeCharacterFromFavorites = (character) => {
-    // setStoredFavoriteCharacters((prevState) =>
-    //   prevState.filter((el) => el.id !== character.id)
-    // );
-    setHeroesList((prevState) => {
-      const { favorites } = prevState;
-      favorites.filter((el) => el.id !== character.id);
-      return { ...prevState, favorites };
-    });
-  };
-
-  const handleClick = (character) => {
-    const { id } = character;
-    // if (isHeroAmongFavorites(storedFavoriteCharacters, id)) {
-    if (isHeroAmongFavorites(heroesList.favorites, id)) {
-      removeCharacterFromFavorites(character);
-      return;
-    }
-    addCharacterToFavorites(character);
-  };
+const ListHeroes = ({ itemsArr, toggleHeroFavorites, isHeroAmongFavorites }) => {
+  const { heroesList } = useContext(HeroesListContext);
+  const [heroes, setHeroes] = useState([]);
 
   useEffect(() => {
-    setItems(() => itemsArr);
-    // setHeroesList((prevState) => {
-    //   return { ...prevState, heroes: itemsArr };
-    // });
+    setHeroes(() => itemsArr);
   }, [itemsArr]);
 
   return (
     <S.ListWrapper>
       <S.List>
-        {isArrayFilled(items) &&
-          items.map((item, index) => {
-            const { id, name, thumbnail } = item;
+        {isArrayFilled(heroes) &&
+          heroes.map((hero) => {
+            const { id, name, thumbnail } = hero;
             const { path, extension } = thumbnail;
             const character = { id, name, thumbnail };
             const iconType = isHeroAmongFavorites(heroesList.favorites, id)
@@ -74,7 +28,7 @@ const ListHeroes = ({ itemsArr }) => {
               : 'outline';
 
             return (
-              <S.ListItem key={index}>
+              <S.ListItem key={id}>
                 <Link to={`/hero/${id}`}>
                   <S.Image
                     aria-label={name}
@@ -91,7 +45,7 @@ const ListHeroes = ({ itemsArr }) => {
                     iconType={iconType}
                     handleClick={(event) => {
                       event.preventDefault();
-                      handleClick(character);
+                      toggleHeroFavorites(character);
                     }}
                   />
                 </S.Content>
@@ -106,6 +60,12 @@ const ListHeroes = ({ itemsArr }) => {
 ListHeroes.propTypes = {
   /** Define a lista a ser renderizada */
   itemsArr: array,
+
+  /** Adiciona ou remove herois da lista de favoritos */
+  toggleHeroFavorites: func.isRequired,
+
+  /** Compara o item atual com a lista de herois favoritados */
+  isHeroAmongFavorites: func.isRequired,
 };
 
 ListHeroes.defaultProps = {

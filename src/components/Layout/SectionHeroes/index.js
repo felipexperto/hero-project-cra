@@ -16,19 +16,34 @@ const getHeroes = async (setHook, query = 'limit=20') => {
   });
 };
 
+const isHeroAmongFavorites = (arr, id) => arr.some((el) => el.id === id);
+
 const SectionHeroes = () => {
   const [renderItems, setRenderItems] = useState([]);
   const { heroesList, setHeroesList } = useContext(HeroesListContext);
-  const { search } = useContext(SearchContext);
   const [heroesFoundInSearchQuantity, setHeroesFoundInSearchQuantity] = useState(0);
-  const [storedFavoriteCharacters] = useLocalStorage('hp_favorite_characters', []);
+
+  const { search } = useContext(SearchContext);
   const isSearchFieldEmpty = !search || search === '';
 
-  const applyFilterToList = () => {
-    const items = heroesList.hearted ? heroesList.favorites : heroesList.heroes;
-    const filteredItems = heroesList.sort ? sortCharactersArray(items) : items;
-    setRenderItems(() => filteredItems);
-  };
+  const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
+    'hp_favorite_characters',
+    []
+  );
+
+  const toggleHeroFavorites = (character) =>
+    setStoredFavoriteCharacters((prevState) => {
+      const isHeroListFull = prevState.length >= 5;
+      const isHeroFavorited = isHeroAmongFavorites(prevState, character.id);
+      const addHero = prevState.concat(character);
+      const removeHero = prevState.filter((el) => el.id !== character.id);
+
+      if (isHeroListFull) {
+        return isHeroFavorited ? removeHero : prevState;
+      } else {
+        return isHeroFavorited ? removeHero : addHero;
+      }
+    });
 
   useEffect(() => {
     isSearchFieldEmpty
@@ -51,9 +66,15 @@ const SectionHeroes = () => {
     setHeroesFoundInSearchQuantity(() => heroesList.heroes.length);
   }, [heroesList.heroes]);
 
+  const applyFilterToList = () => {
+    const items = heroesList.hearted ? heroesList.favorites : heroesList.heroes;
+    const filteredItems = heroesList.sort ? sortCharactersArray(items) : items;
+    setRenderItems(() => filteredItems);
+  };
+
   useEffect(() => {
     applyFilterToList();
-  }, [heroesList.heroes, heroesList.hearted, heroesList.sort]);
+  }, [heroesList.heroes, heroesList.hearted, heroesList.sort, heroesList.favorites]);
 
   return (
     <S.SectionHeroesWrapper>
@@ -105,7 +126,11 @@ const SectionHeroes = () => {
           </S.ShowFavoritesContainer>
         </S.MenubarColumn>
       </S.Menubar>
-      <ListHeroes itemsArr={renderItems} />
+      <ListHeroes
+        itemsArr={renderItems}
+        toggleHeroFavorites={toggleHeroFavorites}
+        isHeroAmongFavorites={isHeroAmongFavorites}
+      />
     </S.SectionHeroesWrapper>
   );
 };
