@@ -36,6 +36,13 @@ export const SearchInput = styled.input`
     opacity: 0.5;
     text-overflow: ellipsis;
   }
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
 `;
 
 export const SearchButton = styled.button`

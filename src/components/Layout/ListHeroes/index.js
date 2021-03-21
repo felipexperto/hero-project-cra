@@ -1,14 +1,17 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { array, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { HeroesListContext } from 'contexts';
 import { isArrayFilled } from 'utils/helpers';
 import { ButtonFavorite } from 'components/UI';
 import * as S from './styles';
 
-const ListHeroes = ({ itemsArr, toggleHeroFavorites, isHeroAmongFavorites }) => {
-  const { heroesList } = useContext(HeroesListContext);
+const ListHeroes = ({
+  favorites,
+  itemsArr,
+  toggleHeroFavorites,
+  isHeroAmongFavorites,
+}) => {
   const [heroes, setHeroes] = useState([]);
 
   useEffect(() => {
@@ -23,9 +26,7 @@ const ListHeroes = ({ itemsArr, toggleHeroFavorites, isHeroAmongFavorites }) => 
             const { id, name, thumbnail } = hero;
             const { path, extension } = thumbnail;
             const character = { id, name, thumbnail };
-            const iconType = isHeroAmongFavorites(heroesList.favorites, id)
-              ? 'filled'
-              : 'outline';
+            const iconType = isHeroAmongFavorites(favorites, id) ? 'filled' : 'outline';
 
             return (
               <S.ListItem key={id}>
@@ -58,6 +59,9 @@ const ListHeroes = ({ itemsArr, toggleHeroFavorites, isHeroAmongFavorites }) => 
 };
 
 ListHeroes.propTypes = {
+  /** Lista de herois favoritados */
+  favorites: array,
+
   /** Define a lista a ser renderizada */
   itemsArr: array,
 

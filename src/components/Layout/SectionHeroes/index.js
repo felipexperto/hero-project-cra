@@ -45,22 +45,25 @@ const SectionHeroes = () => {
       }
     });
 
-  useEffect(() => {
+  const handleSearch = () => {
     isSearchFieldEmpty
       ? getHeroes(setHeroesList)
       : getHeroes(setHeroesList, `limit=100&nameStartsWith=${search}`);
+  };
+
+  useEffect(() => {
+    handleSearch();
   }, []);
+
+  useEffect(() => {
+    handleSearch();
+  }, [search]);
 
   useEffect(() => {
     setHeroesList((prevState) => {
       return { ...prevState, favorites: storedFavoriteCharacters };
     });
   }, [storedFavoriteCharacters]);
-
-  useEffect(() => {
-    if (isSearchFieldEmpty) return;
-    getHeroes(setHeroesList, `limit=100&nameStartsWith=${search}`);
-  }, [search]);
 
   useEffect(() => {
     setHeroesFoundInSearchQuantity(() => heroesList.heroes.length);
@@ -127,9 +130,10 @@ const SectionHeroes = () => {
         </S.MenubarColumn>
       </S.Menubar>
       <ListHeroes
+        favorites={heroesList.favorites}
         itemsArr={renderItems}
-        toggleHeroFavorites={toggleHeroFavorites}
         isHeroAmongFavorites={isHeroAmongFavorites}
+        toggleHeroFavorites={toggleHeroFavorites}
       />
     </S.SectionHeroesWrapper>
   );
