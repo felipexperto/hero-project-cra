@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { useLocalStorage } from 'hooks';
+import { useDebounce, useLocalStorage } from 'hooks';
 import { HeroesListContext, SearchContext } from 'contexts';
 import { sortCharactersArray } from 'utils/helpers';
 import { getCharacters } from 'services';
@@ -24,7 +24,8 @@ const SectionHeroes = () => {
   const [heroesFoundInSearchQuantity, setHeroesFoundInSearchQuantity] = useState(0);
 
   const { search } = useContext(SearchContext);
-  const isSearchFieldEmpty = !search || search === '';
+  const debouncedSearch = useDebounce(search, 500);
+  const isSearchFieldEmpty = !debouncedSearch || debouncedSearch === '';
 
   const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
     'hp_favorite_characters',
@@ -48,7 +49,7 @@ const SectionHeroes = () => {
   const handleSearch = () => {
     isSearchFieldEmpty
       ? getHeroes(setHeroesList)
-      : getHeroes(setHeroesList, `limit=100&nameStartsWith=${search}`);
+      : getHeroes(setHeroesList, `limit=100&nameStartsWith=${debouncedSearch}`);
   };
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const SectionHeroes = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [search]);
+  }, [debouncedSearch]);
 
   useEffect(() => {
     setHeroesList((prevState) => {
