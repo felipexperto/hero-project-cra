@@ -1,70 +1,101 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# **Hero Project CRA**
 
-## Available Scripts
+Projeto com base na famosa [API da Marvel](https://developer.marvel.com/docs), permitindo consultar personagens e favoritá-los. Criado com [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+### **[Confira o LIVE DEMO clicando aqui](https://fxdev-heroproject.netlify.app/)**
 
-### `yarn start`
+[![Netlify Status](https://api.netlify.com/api/v1/badges/29200d34-e4b3-4a12-a108-be37e1dde8ee/deploy-status)](https://app.netlify.com/sites/fxdev-heroproject/deploys)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![React](https://github.com//aleen42/badges/raw/master/src/react.svg)
+![Tamanho do repositório](https://img.shields.io/github/repo-size/felipexperto/hero-project-cra)
+![Quantidade de linhas de código do repositório](https://img.shields.io/tokei/lines/github/felipexperto/hero-project-cra)
+![Quantidades de linguagens no repositório](https://img.shields.io/github/languages/count/felipexperto/hero-project-cra)
+![Linguagem principal do repositório](https://img.shields.io/github/languages/top/felipexperto/hero-project-cra)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![Tipo de licença do projeto](https://img.shields.io/github/license/felipexperto/hero-project-cra)
+![Versão do projeto no package.json](https://img.shields.io/github/package-json/v/felipexperto/hero-project-cra)
+![Data do último commit](https://img.shields.io/github/last-commit/felipexperto/hero-project-cra)
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## **Stack**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [React](https://pt-br.reactjs.org/) & [ReactDOM](https://pt-br.reactjs.org/docs/react-dom.html) são as bibliotecas de componentes;
+- [Styled Components](https://styled-components.com/) para escrever CSS-in-JS;
+- [PropTypes](https://pt-br.reactjs.org/docs/typechecking-with-proptypes.html) para typechecking;
+- [Husky versão 4](https://github.com/typicode/husky) + [Lint Staged](https://github.com/okonet/lint-staged) para rodar Prettier, lint e testes unitários nos arquivos em stage ( `git add .` ) ao executar `git commit`, buscando diminuir a quantidade de commits com erros.
+- [eslint](https://eslint.org/) + [prettier](https://prettier.io/) para manter um padrão e boas práticas na escrita do código;
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) para testes unitários;
+- [Cypress](https://www.cypress.io/) para testes end-to-end;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **Arquivos .env:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para rodar o projeto localmente é necessário criar um arquivo `.env` com suas respectivas variáveis de ambiente.
 
-### `yarn eject`
+Estando na pasta do projeto, você poderá rodar o comando abaixo em seu Terminal para utilizar o arquivo `.env.example` como modelo:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* `cp .env.example .env`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Agora basta editar o valor da chave `REACT_APP_MARVEL_PUBLIC_KEY` pela sua `PUBLIC_KEY` da Marvel.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## **Rodando o projeto:**
 
-## Learn More
+Após clonar o repositório, instale as dependências:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* `yarn install`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+Visualizando o projeto em modo de desenvolvimento:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+* `yarn start`
+* Acessar http://localhost:5001/ para visualizar no navegador.
 
-### Analyzing the Bundle Size
+## **Testes:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Rodando testes unitários:
 
-### Making a Progressive Web App
+* `yarn unit`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Visualizar a cobetura dos testes unitários:
 
-### Advanced Configuration
+* `yarn coverage`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Rodando testes End-to-End:
 
-### Deployment
+* `yarn e2e` (a aplicação deve estar em execução)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `yarn build` fails to minify
+## **Linters:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Rodando **Prettier** para formatar seu código de maneira consistente seguindo um estilo:
+
+* `yarn prettier:fix`
+
+Rodando **Prettier** para verificar se existem arquivos fora do estilo estabelecido:
+
+* `yarn prettier:check`
+
+Rodando a verificação do **eslint** em arquivos `.js` procurando más práticas:
+
+* `yarn lint`
+
+Rodando o **eslint** para tentar corrigir pequenos problemas, como warnings:
+
+* `yarn lint:fix`
+
+Rodando a verificação do **prettier** em arquivos `.js` procurando inconsistências:
+
+* `yarn prettier:check`
+
+Rodando o **prettier** para tentar corrigir inconsistências no padrão de escrita de código:
+
+* `yarn prettier:fix`
+
+## **Deploy**
+
+* `yarn build`
+
+Este é o comando padrão de build do projeto que disponibiliza o React em modo de produção e arquivos otimizados.  
+Ao rodar o comando, o resultado é uma pasta `build` criada no diretório raíz ( `/` ).
