@@ -164,8 +164,8 @@ const PageHero = ({ match }) => {
 };
 
 PageHero.propTypes = {
+  /** Recebe informacoes do react-router */
   match: object,
-  location: object,
 };
 
 export { PageHero };

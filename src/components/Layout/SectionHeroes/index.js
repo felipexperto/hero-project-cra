@@ -85,7 +85,9 @@ const SectionHeroes = () => {
       <S.Menubar>
         <S.MenubarColumn>
           <S.HeroesCount>
-            {!heroesList.hearted && `Encontrados ${heroesFoundInSearchQuantity} heróis`}
+            {heroesList.hearted
+              ? `${heroesList.favorites.length} heróis favoritados (máx. 5)`
+              : `Encontrados ${heroesFoundInSearchQuantity} heróis`}
           </S.HeroesCount>
         </S.MenubarColumn>
         <S.MenubarColumn>

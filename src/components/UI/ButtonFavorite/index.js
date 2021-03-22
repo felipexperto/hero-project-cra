@@ -18,9 +18,16 @@ const ButtonFavorite = ({ handleClick, height, iconType, width }) => {
 };
 
 ButtonFavorite.propTypes = {
+  /** Define a altura do botão */
   height: string,
+
+  /** Define a função de evento Click */
   handleClick: func,
+
+  /** Define o estilo de ícone (traço ou preenchido)  */
   iconType: oneOf(['outline', 'filled']),
+
+  /** Define a largura do botão */
   width: string,
 };
 

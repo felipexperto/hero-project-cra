@@ -25,10 +25,16 @@ const Search = ({ disabled, value, setValue, variant }) => {
 };
 
 Search.propTypes = {
+  /** Define se botão e input de texto estão desabilitados */
   disabled: bool,
-  margin: string,
+
+  /** Atualiza o estado com valor digitado */
   setValue: func,
+
+  /** Define o valor digitado */
   value: string,
+
+  /** Define as cores busca */
   variant: oneOf(['primary', 'secondary']),
 };
 
