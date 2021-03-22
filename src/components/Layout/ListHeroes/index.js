@@ -3,7 +3,7 @@ import { array, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { isArrayFilled } from 'utils/helpers';
-import { ButtonFavorite, Loader } from 'components/UI';
+import { ButtonFavorite } from 'components/UI';
 import * as S from './styles';
 
 const ListHeroes = ({
@@ -55,8 +55,9 @@ const ListHeroes = ({
           })
         ) : (
           <S.ListPlaceholder>
-            <S.ListPlaceholderTitle>Selecionando heróis...</S.ListPlaceholderTitle>
-            <Loader />
+            <S.ListPlaceholderTitle>
+              Nenhum resultado encontrado :(
+            </S.ListPlaceholderTitle>
           </S.ListPlaceholder>
         )}
       </S.List>
