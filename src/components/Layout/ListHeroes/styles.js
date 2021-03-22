@@ -59,3 +59,14 @@ export const Name = styled.div`
   font-weight: ${({ theme }) => theme.fonts.weight.bold};
   text-align: left;
 `;
+
+export const ListPlaceholder = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0 6rem 0;
+  width: 100%;
+`;
+
+export const ListPlaceholderTitle = styled.h2`
+  color: ${({ theme }) => theme.colors.red};
+`;

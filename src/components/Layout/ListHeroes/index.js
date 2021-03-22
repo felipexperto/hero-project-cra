@@ -3,7 +3,7 @@ import { array, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { isArrayFilled } from 'utils/helpers';
-import { ButtonFavorite } from 'components/UI';
+import { ButtonFavorite, Loader } from 'components/UI';
 import * as S from './styles';
 
 const ListHeroes = ({
@@ -21,7 +21,7 @@ const ListHeroes = ({
   return (
     <S.ListWrapper>
       <S.List>
-        {isArrayFilled(heroes) &&
+        {isArrayFilled(heroes) ? (
           heroes.map((hero) => {
             const { id, name, thumbnail } = hero;
             const { path, extension } = thumbnail;
@@ -52,7 +52,13 @@ const ListHeroes = ({
                 </S.Content>
               </S.ListItem>
             );
-          })}
+          })
+        ) : (
+          <S.ListPlaceholder>
+            <S.ListPlaceholderTitle>Selecionando heróis...</S.ListPlaceholderTitle>
+            <Loader />
+          </S.ListPlaceholder>
+        )}
       </S.List>
     </S.ListWrapper>
   );
