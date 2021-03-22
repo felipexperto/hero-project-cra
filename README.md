@@ -5,6 +5,8 @@ Projeto com base na famosa [API da Marvel](https://developer.marvel.com/docs), p
 
 ### **[Confira o LIVE DEMO clicando aqui](https://fxdev-heroproject.netlify.app/)**
 
+---
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/29200d34-e4b3-4a12-a108-be37e1dde8ee/deploy-status)](https://app.netlify.com/sites/fxdev-heroproject/deploys)
 
 ![React](https://github.com//aleen42/badges/raw/master/src/react.svg)
