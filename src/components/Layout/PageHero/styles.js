@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 import { media, Mixins } from 'styles';
 
-const { resetList, visuallyHidden } = Mixins;
+const { resetList } = Mixins;
 
 export const WrapperPageHero = styled.section`
   background-color: ${({ theme }) => theme.colors.lightgreen};
@@ -122,18 +122,6 @@ export const Image = styled.img`
     margin-right: 0;
     width: auto;
   `}
-`;
-
-export const FavoriteIndicator = styled.div`
-  span {
-    ${visuallyHidden};
-  }
-  [data-icon='icon-svg'] {
-    height: 32px;
-    margin-top: 0.5rem;
-    opacity: 0.5;
-    width: 32px;
-  }
 `;
 
 export const OnSaleList = styled.ol`
