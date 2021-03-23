@@ -1,4 +1,3 @@
-
 # **Hero Project CRA**
 
 Projeto com base na famosa [API da Marvel](https://developer.marvel.com/docs), permitindo consultar personagens e favoritá-los. Criado com [Create React App](https://github.com/facebook/create-react-app).
@@ -19,8 +18,6 @@ Projeto com base na famosa [API da Marvel](https://developer.marvel.com/docs), p
 ![Versão do projeto no package.json](https://img.shields.io/github/package-json/v/felipexperto/hero-project-cra)
 ![Data do último commit](https://img.shields.io/github/last-commit/felipexperto/hero-project-cra)
 
-
-
 ## **Stack**
 
 - [React](https://pt-br.reactjs.org/) & [ReactDOM](https://pt-br.reactjs.org/docs/react-dom.html) são as bibliotecas de componentes;
@@ -31,73 +28,77 @@ Projeto com base na famosa [API da Marvel](https://developer.marvel.com/docs), p
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) para testes unitários;
 - [Cypress](https://www.cypress.io/) para testes end-to-end;
 
+## **Dependências**
+
+Para o ambiente de desenvolvimento e testes você vai precisar de:
+
+- [Node](https://nodejs.org/en/) - versão recomendada `14.16.0`;
+- [Cypress](https://www.cypress.io/);
+
 ## **Arquivos .env:**
 
 Para rodar o projeto localmente é necessário criar um arquivo `.env` com suas respectivas variáveis de ambiente.
 
 Estando na pasta do projeto, você poderá rodar o comando abaixo em seu Terminal para utilizar o arquivo `.env.example` como modelo:
 
-* `cp .env.example .env`
+- `cp .env.example .env`
 
 Agora basta editar o valor da chave `REACT_APP_MARVEL_PUBLIC_KEY` pela sua `PUBLIC_KEY` da Marvel.
-
 
 ## **Rodando o projeto:**
 
 Após clonar o repositório, instale as dependências:
 
-* `yarn install`
-
+- `yarn install`
 
 Visualizando o projeto em modo de desenvolvimento:
 
-* `yarn start`
-* Acessar http://localhost:5001/ para visualizar no navegador.
+- `yarn start`
+- Acessar http://localhost:5001/ para visualizar no navegador.
 
 ## **Testes:**
 
 Rodando testes unitários:
 
-* `yarn unit`
+- `yarn unit`
 
 Visualizar a cobetura dos testes unitários:
 
-* `yarn coverage`
+- `yarn coverage`
 
 Rodando testes End-to-End:
 
-* `yarn e2e` (a aplicação deve estar em execução)
-
+- `yarn e2e` (a aplicação deve estar em execução)
 
 ## **Linters:**
 
 Rodando **Prettier** para formatar seu código de maneira consistente seguindo um estilo:
 
-* `yarn prettier:fix`
+- `yarn prettier:fix`
 
 Rodando **Prettier** para verificar se existem arquivos fora do estilo estabelecido:
 
-* `yarn prettier:check`
+- `yarn prettier:check`
 
 Rodando a verificação do **eslint** em arquivos `.js` procurando más práticas:
 
-* `yarn lint`
+- `yarn lint`
 
 Rodando o **eslint** para tentar corrigir pequenos problemas, como warnings:
 
-* `yarn lint:fix`
+- `yarn lint:fix`
 
 Rodando a verificação do **prettier** em arquivos `.js` procurando inconsistências:
 
-* `yarn prettier:check`
+- `yarn prettier:check`
 
 Rodando o **prettier** para tentar corrigir inconsistências no padrão de escrita de código:
 
-* `yarn prettier:fix`
+- `yarn prettier:fix`
 
 ## **Deploy**
 
-* `yarn build`
+- `yarn build`
 
 Este é o comando padrão de build do projeto que disponibiliza o React em modo de produção e arquivos otimizados.  
 Ao rodar o comando, o resultado é uma pasta `build` criada no diretório raíz ( `/` ).
