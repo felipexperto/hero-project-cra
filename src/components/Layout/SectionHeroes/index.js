@@ -81,10 +81,10 @@ const SectionHeroes = () => {
   }, [heroesList.heroes, heroesList.hearted, heroesList.sort, heroesList.favorites]);
 
   return (
-    <S.SectionHeroesWrapper>
+    <S.SectionHeroesWrapper data-testid="HP_SECTION_HEROES">
       <S.Menubar>
         <S.MenubarColumn>
-          <S.HeroesCount>
+          <S.HeroesCount data-testid="HP_COUNTER_HEROES">
             {heroesList.hearted
               ? `${heroesList.favorites.length} heróis favoritados (máx. 5)`
               : `Encontrados ${heroesFoundInSearchQuantity} heróis`}
@@ -93,6 +93,8 @@ const SectionHeroes = () => {
         <S.MenubarColumn>
           <S.OrderByNameContainer>
             <S.OrderByNameButton
+              data-testid="HP_BUTTON_ORDER"
+              data-active={heroesList.sort ? 'ativado' : 'desativado'}
               onClick={(event) => {
                 event.preventDefault();
                 setHeroesList((prevState) => {
@@ -111,6 +113,8 @@ const SectionHeroes = () => {
           </S.OrderByNameContainer>
           <S.ShowFavoritesContainer>
             <S.ShowFavoritesButton
+              data-testid="HP_BUTTON_FAVORITE"
+              data-active={heroesList.hearted ? 'ativado' : 'desativado'}
               onClick={(event) => {
                 event.preventDefault();
                 setHeroesList((prevState) => {

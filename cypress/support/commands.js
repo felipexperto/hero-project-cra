@@ -23,3 +23,17 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getHeroesFromList', (callback) => {
+  const list = cy.get('[data-testid="HP_LIST_HEROES"]');
+  const heroes = list.find('li');
+  heroes.then((items) => callback(items));
+});
+
+Cypress.Commands.add('clearHeroesLocalStorage', () => {
+  window.localStorage.removeItem('hp_favorite_characters');
+});
+
+Cypress.Commands.add('populateLocalStorage', (arr) => {
+  window.localStorage.setItem('hp_favorite_characters', JSON.stringify(arr));
+});

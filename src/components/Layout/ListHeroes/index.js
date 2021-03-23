@@ -19,7 +19,7 @@ const ListHeroes = ({
   }, [itemsArr]);
 
   return (
-    <S.ListWrapper>
+    <S.ListWrapper data-testid="HP_LIST_HEROES">
       <S.List>
         {isArrayFilled(heroes) ? (
           heroes.map((hero) => {
@@ -29,8 +29,8 @@ const ListHeroes = ({
             const iconType = isHeroAmongFavorites(favorites, id) ? 'filled' : 'outline';
 
             return (
-              <S.ListItem key={id}>
-                <Link to={`/hero/${id}`}>
+              <S.ListItem key={id} data-heroid={id}>
+                <Link to={`/hero/${id}`} title={name}>
                   <S.Image
                     aria-label={name}
                     fullPath={`${path}.${extension}`}
@@ -39,7 +39,7 @@ const ListHeroes = ({
                   />
                 </Link>
                 <S.Content>
-                  <Link to={`/hero/${id}`}>
+                  <Link to={`/hero/${id}`} title={name}>
                     <S.Name>{name}</S.Name>
                   </Link>
                   <ButtonFavorite
