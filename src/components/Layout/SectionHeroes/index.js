@@ -113,7 +113,7 @@ const SectionHeroes = () => {
           </S.OrderByNameContainer>
           <S.ShowFavoritesContainer>
             <S.ShowFavoritesButton
-              data-testid="HP_BUTTON_FAVORITE"
+              data-testid="HP_BUTTON_SHOW_FAVORITES"
               data-active={heroesList.hearted ? 'ativado' : 'desativado'}
               onClick={(event) => {
                 event.preventDefault();

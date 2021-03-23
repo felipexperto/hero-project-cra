@@ -1,5 +1,3 @@
-import { wait } from "@testing-library/dom";
-
 describe('Executa busca por herói', () => {
   before(() => {
     cy

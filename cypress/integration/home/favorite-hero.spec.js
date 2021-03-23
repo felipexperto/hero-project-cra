@@ -1,7 +1,7 @@
 describe('Escolhe um herói/heroína dentre os itens da lista atual para favoritar', () => {
   before(() => {
     cy.visit('/');
-    cy.clearLocalStorage();
+    cy.clearHeroesLocalStorage();
   });
 
   it('Confere a existência da lista', () => {
@@ -36,7 +36,7 @@ describe('Escolhe um herói/heroína dentre os itens da lista atual para favorit
           .click();
 
         cy
-          .get('[data-testid="HP_BUTTON_FAVORITE"]')
+          .get('[data-testid="HP_BUTTON_SHOW_FAVORITES"]')
           .click();
 
         cy
