@@ -13,10 +13,15 @@ const ButtonFavorite = ({ handleClick, height, isDisabled, iconType, width }) =>
         onClick={handleClick}
         width={width}
       >
-        {iconType === 'outline' ? (
-          <HeartOutline data-icon="icon-svg" />
+        {isDisabled ? (
+          <span>Não é possível favoritar mais do que 5 heróis</span>
         ) : (
-          <HeartFilled data-icon="icon-svg" />
+          <span>Favorite este herói</span>
+        )}
+        {iconType === 'outline' ? (
+          <HeartOutline data-icon="icon-svg" title="" />
+        ) : (
+          <HeartFilled data-icon="icon-svg" title="" />
         )}
       </S.ButtonFavorite>
     </S.ButtonFavoriteWrapper>

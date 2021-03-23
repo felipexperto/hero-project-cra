@@ -98,7 +98,7 @@ const PageHero = ({ match }) => {
   return (
     <S.WrapperPageHero>
       <Header variant="secondary" />
-      <Container as="main">
+      <Container as="main" aria-label="Detalhes do herói">
         {isObjectFilled(characterDetails) && (
           <>
             <S.Details>
@@ -120,6 +120,9 @@ const PageHero = ({ match }) => {
                         thumbnail,
                       });
                     }}
+                    isDisabled={
+                      !isCharacterAmongFavorites && storedFavoriteCharacters.length >= 5
+                    }
                   />
                 </S.DetailsHeader>
                 <S.Description data-testid="HP_PARAGRAPH_DESCRIPTION">
@@ -158,8 +161,8 @@ const PageHero = ({ match }) => {
         {isArrayFilled(comics) && (
           <>
             <S.OnSale>
-              <S.OnSaleTitle>Últimos lançamentos</S.OnSaleTitle>
-              <S.OnSaleList>
+              <S.OnSaleTitle id="onsale-title">Últimos lançamentos</S.OnSaleTitle>
+              <S.OnSaleList aria-labelledby="onsale-title">
                 {comics.slice(0, maxComicsToShow).map((item, index) => {
                   const {
                     title,

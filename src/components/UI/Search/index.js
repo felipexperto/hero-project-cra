@@ -16,7 +16,11 @@ const Search = ({ disabled, value, setValue, variant }) => {
           value={value}
           variant={variant}
         />
-        <S.SearchButton disabled={disabled} variant={variant}>
+        <S.SearchButton
+          disabled={disabled}
+          variant={variant}
+          title="Clique para fazer a busca"
+        >
           <SearchIcon data-icon="icon-svg" />
         </S.SearchButton>
       </S.SearchGroup>

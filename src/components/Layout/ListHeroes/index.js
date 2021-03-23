@@ -26,7 +26,9 @@ const ListHeroes = ({
             const { id, name, thumbnail } = hero;
             const { path, extension } = thumbnail;
             const character = { id, name, thumbnail };
-            const iconType = isHeroAmongFavorites(favorites, id) ? 'filled' : 'outline';
+            const isHeroFavorited = isHeroAmongFavorites(favorites, id);
+            const iconType = isHeroFavorited ? 'filled' : 'outline';
+            const isDisabled = !isHeroFavorited && favorites.length >= 5;
 
             return (
               <S.ListItem key={id} data-heroid={id}>
@@ -44,6 +46,7 @@ const ListHeroes = ({
                   </Link>
                   <ButtonFavorite
                     iconType={iconType}
+                    isDisabled={isDisabled}
                     handleClick={(event) => {
                       event.preventDefault();
                       toggleHeroFavorites(character);
