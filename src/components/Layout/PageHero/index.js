@@ -123,6 +123,7 @@ const PageHero = ({ match }) => {
                     isDisabled={
                       !isCharacterAmongFavorites && storedFavoriteCharacters.length >= 5
                     }
+                    isActive={isCharacterAmongFavorites}
                   />
                 </S.DetailsHeader>
                 <S.Description data-testid="HP_PARAGRAPH_DESCRIPTION">

@@ -3,7 +3,14 @@ import { bool, func, oneOf, string } from 'prop-types';
 import * as S from './styles';
 import { HeartFilled, HeartOutline } from 'images/icons';
 
-const ButtonFavorite = ({ handleClick, height, isDisabled, iconType, width }) => {
+const ButtonFavorite = ({
+  handleClick,
+  height,
+  isActive,
+  isDisabled,
+  iconType,
+  width,
+}) => {
   return (
     <S.ButtonFavoriteWrapper>
       <S.ButtonFavorite
@@ -16,7 +23,7 @@ const ButtonFavorite = ({ handleClick, height, isDisabled, iconType, width }) =>
         {isDisabled ? (
           <span>Não é possível favoritar mais do que 5 heróis</span>
         ) : (
-          <span>Favorite este herói</span>
+          <span>{isActive ? 'Desfavorite' : 'Favorite'} este herói</span>
         )}
         {iconType === 'outline' ? (
           <HeartOutline data-icon="icon-svg" title="" />
@@ -37,6 +44,9 @@ ButtonFavorite.propTypes = {
 
   /** Define o estilo de ícone (traço ou preenchido)  */
   iconType: oneOf(['outline', 'filled']),
+
+  /** Define se botão está ativado ou não */
+  isActive: bool,
 
   /** Define se botão está desabilitado ou não */
   isDisabled: bool,
