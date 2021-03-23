@@ -45,6 +45,7 @@ const Header = ({ variant }) => {
 };
 
 Header.propTypes = {
+  /** Define o estilo e informações no header */
   variant: oneOf(['primary', 'secondary']),
 };
 

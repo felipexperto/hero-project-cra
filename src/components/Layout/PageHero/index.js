@@ -85,7 +85,9 @@ const PageHero = ({ match }) => {
             <S.Details>
               <S.Column>
                 <S.DetailsHeader>
-                  <S.Name>{characterDetails.name}</S.Name>
+                  <S.Name data-testid="HP_TITLE_HERO_NAME">
+                    {characterDetails.name}
+                  </S.Name>
                   <S.FavoriteIndicator id="favorite-indicator">
                     {iconType === 'filled' ? (
                       <>
@@ -106,7 +108,7 @@ const PageHero = ({ match }) => {
                     )}
                   </S.FavoriteIndicator>
                 </S.DetailsHeader>
-                <S.Description>
+                <S.Description data-testid="HP_PARAGRAPH_DESCRIPTION">
                   {characterDetails.description === ''
                     ? 'Sem descrição disponível para este personagem.'
                     : characterDetails.description}
@@ -116,20 +118,23 @@ const PageHero = ({ match }) => {
                     <S.ComicsTitle>
                       <strong>Quadrinhos</strong>
                     </S.ComicsTitle>
-                    <S.ComicsContent>
+                    <S.ComicsContent data-testid="HP_COMICS">
                       <Book data-icon="icon-svg" />
                       <span>{characterDetails.comics.available}</span>
                     </S.ComicsContent>
                   </S.Comics>
                 </S.Events>
                 <S.LastComic>
-                  <S.LastComicTitle>Último quadrinho:</S.LastComicTitle>
+                  <S.LastComicTitle data-testid="HP_LAST_COMIC">
+                    Último quadrinho:
+                  </S.LastComicTitle>
                   <S.LastComicContent>{lastComic}</S.LastComicContent>
                 </S.LastComic>
               </S.Column>
               <S.Column>
                 <S.Image
                   alt={characterDetails.name}
+                  data-testid="HP_IMAGE_FEATURED"
                   src={`${characterDetails.thumbnail.path}.${characterDetails.thumbnail.extension}`}
                 />
               </S.Column>
@@ -164,8 +169,8 @@ const PageHero = ({ match }) => {
 };
 
 PageHero.propTypes = {
+  /** Recebe informacoes do react-router */
   match: object,
-  location: object,
 };
 
 export { PageHero };

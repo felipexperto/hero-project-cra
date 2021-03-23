@@ -3,7 +3,7 @@ import { array, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { isArrayFilled } from 'utils/helpers';
-import { ButtonFavorite, Loader } from 'components/UI';
+import { ButtonFavorite } from 'components/UI';
 import * as S from './styles';
 
 const ListHeroes = ({
@@ -19,7 +19,7 @@ const ListHeroes = ({
   }, [itemsArr]);
 
   return (
-    <S.ListWrapper>
+    <S.ListWrapper data-testid="HP_LIST_HEROES">
       <S.List>
         {isArrayFilled(heroes) ? (
           heroes.map((hero) => {
@@ -29,8 +29,8 @@ const ListHeroes = ({
             const iconType = isHeroAmongFavorites(favorites, id) ? 'filled' : 'outline';
 
             return (
-              <S.ListItem key={id}>
-                <Link to={`/hero/${id}`}>
+              <S.ListItem key={id} data-heroid={id}>
+                <Link to={`/hero/${id}`} title={name}>
                   <S.Image
                     aria-label={name}
                     fullPath={`${path}.${extension}`}
@@ -39,7 +39,7 @@ const ListHeroes = ({
                   />
                 </Link>
                 <S.Content>
-                  <Link to={`/hero/${id}`}>
+                  <Link to={`/hero/${id}`} title={name}>
                     <S.Name>{name}</S.Name>
                   </Link>
                   <ButtonFavorite
@@ -55,8 +55,9 @@ const ListHeroes = ({
           })
         ) : (
           <S.ListPlaceholder>
-            <S.ListPlaceholderTitle>Selecionando heróis...</S.ListPlaceholderTitle>
-            <Loader />
+            <S.ListPlaceholderTitle>
+              Nenhum resultado encontrado :(
+            </S.ListPlaceholderTitle>
           </S.ListPlaceholder>
         )}
       </S.List>
