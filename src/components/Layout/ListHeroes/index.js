@@ -77,7 +77,7 @@ ListHeroes.propTypes = {
   ariaLabelledby: string,
 
   /** Lista de herois favoritados */
-  favorites: array,
+  favorites: array.isRequired,
 
   /** Define a lista a ser renderizada */
   itemsArr: array,
