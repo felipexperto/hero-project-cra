@@ -7,6 +7,7 @@ export const LogoWrapper = styled.div``;
 export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.darkgrey};
   font-size: 2rem;
+  line-height: 1.2em;
   margin: 0;
   text-transform: uppercase;
 `;
