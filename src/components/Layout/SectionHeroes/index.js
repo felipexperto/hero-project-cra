@@ -9,11 +9,12 @@ import { Toggle } from 'components/UI';
 import { HeartFilled, HeartOutline, SuperHero } from 'images/icons';
 import * as S from './styles';
 
-const getHeroes = async (setHook, query = 'limit=20') => {
+const getHeroes = async (setHook, setIsLoadingHook, query = 'limit=20') => {
   const { results } = await getCharacters(query);
   setHook((prevState) => {
     return { ...prevState, heroes: results };
   });
+  setIsLoadingHook(() => false);
 };
 
 const isHeroAmongFavorites = (arr, id) => arr.some((el) => el.id === id);
@@ -32,6 +33,8 @@ const SectionHeroes = () => {
     []
   );
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const toggleHeroFavorites = (character) =>
     setStoredFavoriteCharacters((prevState) => {
       const isHeroListFull = prevState.length >= 5;
@@ -47,9 +50,10 @@ const SectionHeroes = () => {
     });
 
   const handleSearch = () => {
+    const searchQuery = `limit=100&nameStartsWith=${debouncedSearch}`;
     isSearchFieldEmpty
-      ? getHeroes(setHeroesList)
-      : getHeroes(setHeroesList, `limit=100&nameStartsWith=${debouncedSearch}`);
+      ? getHeroes(setHeroesList, setIsLoading)
+      : getHeroes(setHeroesList, setIsLoading, searchQuery);
   };
 
   useEffect(() => {
@@ -141,6 +145,7 @@ const SectionHeroes = () => {
         favorites={heroesList.favorites}
         itemsArr={renderItems}
         isHeroAmongFavorites={isHeroAmongFavorites}
+        isLoading={isLoading}
         toggleHeroFavorites={toggleHeroFavorites}
       />
     </S.SectionHeroesWrapper>

@@ -54,7 +54,7 @@ Após clonar o repositório, instale as dependências:
 Visualizando o projeto em modo de desenvolvimento:
 
 - `yarn start`
-- Acessar http://localhost:5001/ para visualizar no navegador.
+- Acessar http://localhost:3000/ para visualizar no navegador.
 
 ## **Testes:**
 
