@@ -35,7 +35,8 @@ export const OrderByNameContainer = styled.div`
   margin-top: 1rem;
 
   ${media.tablet`
-  margin-right: 1rem;
+    margin-right: 1rem;
+    margin-top: 0;
   `}
 `;
 
