@@ -23,7 +23,7 @@ export const Details = styled.section`
       flex-basis: 40%;
     `}
     ${media.desktop`
-      flex-basis: 30%;
+      flex-basis: 40%;
     `}
   }
   > div:last-child {
