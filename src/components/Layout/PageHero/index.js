@@ -5,10 +5,12 @@ import { object } from 'prop-types';
 import { useLocalStorage } from 'hooks';
 import { isArrayFilled, isObjectFilled } from 'utils/helpers';
 import { getCharacter, getComics } from 'services';
-import { Container } from 'components/UI';
+import { ButtonFavorite, Container } from 'components/UI';
 import { Footer, Header } from 'components/Layout';
-import { Book, HeartFilled, HeartOutline } from 'images/icons';
+import { Book } from 'images/icons';
 import * as S from './styles';
+
+const isHeroAmongFavorites = (arr, id) => arr.some((el) => el.id === id);
 
 const PageHero = ({ match }) => {
   const {
@@ -17,11 +19,28 @@ const PageHero = ({ match }) => {
   const [characterId] = useState(heroId);
   const [characterDetails, setCharacterDetails] = useState({});
   const [isCharacterAmongFavorites, setIsCharacterAmongFavorites] = useState(false);
-  const [storedFavoriteCharacters] = useLocalStorage('hp_favorite_characters', []);
-  const [iconType, setIconType] = useState('');
+  const [storedFavoriteCharacters, setStoredFavoriteCharacters] = useLocalStorage(
+    'hp_favorite_characters',
+    []
+  );
   const [comics, setComics] = useState([]);
   const [lastComic, setLastComic] = useState([]);
   const maxComicsToShow = comics.length >= 10 ? 10 : comics.length;
+  const [iconType, setIconType] = useState('');
+
+  const toggleHeroFavorites = (character) =>
+    setStoredFavoriteCharacters((prevState) => {
+      const isHeroListFull = prevState.length >= 5;
+      const isHeroFavorited = isHeroAmongFavorites(prevState, character.id);
+      const addHero = prevState.concat(character);
+      const removeHero = prevState.filter((el) => el.id !== character.id);
+
+      if (isHeroListFull) {
+        return isHeroFavorited ? removeHero : prevState;
+      } else {
+        return isHeroFavorited ? removeHero : addHero;
+      }
+    });
 
   useEffect(() => {
     const getHeroDetails = async (id) => {
@@ -79,7 +98,7 @@ const PageHero = ({ match }) => {
   return (
     <S.WrapperPageHero>
       <Header variant="secondary" />
-      <Container as="main">
+      <Container as="main" aria-label="Detalhes do herói">
         {isObjectFilled(characterDetails) && (
           <>
             <S.Details>
@@ -88,25 +107,24 @@ const PageHero = ({ match }) => {
                   <S.Name data-testid="HP_TITLE_HERO_NAME">
                     {characterDetails.name}
                   </S.Name>
-                  <S.FavoriteIndicator id="favorite-indicator">
-                    {iconType === 'filled' ? (
-                      <>
-                        <span>Herói favoritado</span>
-                        <HeartFilled
-                          data-icon="icon-svg"
-                          aria-labelledby="favorite-indicator"
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <span>Herói não favoritado</span>
-                        <HeartOutline
-                          data-icon="icon-svg"
-                          aria-labelledby="favorite-indicator"
-                        />
-                      </>
-                    )}
-                  </S.FavoriteIndicator>
+                  <ButtonFavorite
+                    iconType={iconType}
+                    height="32px"
+                    width="32px"
+                    handleClick={(event) => {
+                      event.preventDefault();
+                      const { id, name, thumbnail } = characterDetails;
+                      toggleHeroFavorites({
+                        id,
+                        name,
+                        thumbnail,
+                      });
+                    }}
+                    isDisabled={
+                      !isCharacterAmongFavorites && storedFavoriteCharacters.length >= 5
+                    }
+                    isActive={isCharacterAmongFavorites}
+                  />
                 </S.DetailsHeader>
                 <S.Description data-testid="HP_PARAGRAPH_DESCRIPTION">
                   {characterDetails.description === ''
@@ -144,8 +162,8 @@ const PageHero = ({ match }) => {
         {isArrayFilled(comics) && (
           <>
             <S.OnSale>
-              <S.OnSaleTitle>Últimos lançamentos</S.OnSaleTitle>
-              <S.OnSaleList>
+              <S.OnSaleTitle id="onsale-title">Últimos lançamentos</S.OnSaleTitle>
+              <S.OnSaleList aria-labelledby="onsale-title">
                 {comics.slice(0, maxComicsToShow).map((item, index) => {
                   const {
                     title,

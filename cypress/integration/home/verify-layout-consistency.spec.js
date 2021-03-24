@@ -31,7 +31,7 @@ describe('Verifica componentes estipulados pelo layout', () => {
       .should('be.visible');
 
     cy
-      .get('[data-testid="HP_BUTTON_FAVORITE"]')
+      .get('[data-testid="HP_BUTTON_SHOW_FAVORITES"]')
       .should('be.visible');
 
     cy
@@ -40,6 +40,10 @@ describe('Verifica componentes estipulados pelo layout', () => {
 
     cy
       .get('[data-testid="HP_COUNTER_HEROES"]')
+      .should('be.visible');
+
+    cy
+      .get('[data-testid="HP_BUTTON_FAVORITE"]')
       .should('be.visible');
 
     cy

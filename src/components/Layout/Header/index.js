@@ -17,7 +17,7 @@ const Header = ({ variant }) => {
       <Container as="section">
         <S.Box variant={variant}>
           <S.LogoWrapper>
-            <Link to={'/'} title="Marvel Search Heroes">
+            <Link to={'/'} title="Home">
               <Logo />
             </Link>
           </S.LogoWrapper>

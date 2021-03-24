@@ -41,7 +41,7 @@ describe('Escolhe 3 heróis dentre os itens da lista atual para favoritar e orde
 
   it('Confere a existência do botão de favoritos', () => {
     cy
-      .get('[data-testid="HP_BUTTON_FAVORITE"]')
+      .get('[data-testid="HP_BUTTON_SHOW_FAVORITES"]')
       .should('be.visible');
   });
 
@@ -54,7 +54,7 @@ describe('Escolhe 3 heróis dentre os itens da lista atual para favoritar e orde
       .reload();
 
     cy
-      .get('[data-testid="HP_BUTTON_FAVORITE"]')
+      .get('[data-testid="HP_BUTTON_SHOW_FAVORITES"]')
       .click()
       .wait(1500);
 

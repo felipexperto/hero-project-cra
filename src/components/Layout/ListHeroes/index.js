@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { array, func } from 'prop-types';
+import { array, func, string } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { isArrayFilled } from 'utils/helpers';
@@ -7,6 +7,7 @@ import { ButtonFavorite } from 'components/UI';
 import * as S from './styles';
 
 const ListHeroes = ({
+  ariaLabelledby,
   favorites,
   itemsArr,
   toggleHeroFavorites,
@@ -20,13 +21,15 @@ const ListHeroes = ({
 
   return (
     <S.ListWrapper data-testid="HP_LIST_HEROES">
-      <S.List>
+      <S.List aria-labelledby={ariaLabelledby}>
         {isArrayFilled(heroes) ? (
           heroes.map((hero) => {
             const { id, name, thumbnail } = hero;
             const { path, extension } = thumbnail;
             const character = { id, name, thumbnail };
-            const iconType = isHeroAmongFavorites(favorites, id) ? 'filled' : 'outline';
+            const isHeroFavorited = isHeroAmongFavorites(favorites, id);
+            const iconType = isHeroFavorited ? 'filled' : 'outline';
+            const isDisabled = !isHeroFavorited && favorites.length >= 5;
 
             return (
               <S.ListItem key={id} data-heroid={id}>
@@ -44,6 +47,8 @@ const ListHeroes = ({
                   </Link>
                   <ButtonFavorite
                     iconType={iconType}
+                    isActive={isHeroFavorited}
+                    isDisabled={isDisabled}
                     handleClick={(event) => {
                       event.preventDefault();
                       toggleHeroFavorites(character);
@@ -66,6 +71,11 @@ const ListHeroes = ({
 };
 
 ListHeroes.propTypes = {
+  /** Define rótulo para lista em tecnologias assistivas
+   *  baseado em objeto com id
+   **/
+  ariaLabelledby: string,
+
   /** Lista de herois favoritados */
   favorites: array,
 

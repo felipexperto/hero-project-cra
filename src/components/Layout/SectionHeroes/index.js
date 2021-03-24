@@ -84,7 +84,7 @@ const SectionHeroes = () => {
     <S.SectionHeroesWrapper data-testid="HP_SECTION_HEROES">
       <S.Menubar>
         <S.MenubarColumn>
-          <S.HeroesCount data-testid="HP_COUNTER_HEROES">
+          <S.HeroesCount id="counter-heroes" data-testid="HP_COUNTER_HEROES">
             {heroesList.hearted
               ? `${heroesList.favorites.length} heróis favoritados (máx. 5)`
               : `Encontrados ${heroesFoundInSearchQuantity} heróis`}
@@ -113,7 +113,7 @@ const SectionHeroes = () => {
           </S.OrderByNameContainer>
           <S.ShowFavoritesContainer>
             <S.ShowFavoritesButton
-              data-testid="HP_BUTTON_FAVORITE"
+              data-testid="HP_BUTTON_SHOW_FAVORITES"
               data-active={heroesList.hearted ? 'ativado' : 'desativado'}
               onClick={(event) => {
                 event.preventDefault();
@@ -137,6 +137,7 @@ const SectionHeroes = () => {
         </S.MenubarColumn>
       </S.Menubar>
       <ListHeroes
+        ariaLabelledby="counter-heroes"
         favorites={heroesList.favorites}
         itemsArr={renderItems}
         isHeroAmongFavorites={isHeroAmongFavorites}
