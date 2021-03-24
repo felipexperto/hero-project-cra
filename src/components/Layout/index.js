@@ -5,6 +5,7 @@ import { ListHeroes } from './ListHeroes';
 import { Page404 } from './Page404';
 import { PageHero } from './PageHero';
 import { PageHome } from './PageHome';
+import { SectionComics } from './SectionComics';
 import { SectionHeroes } from './SectionHeroes';
 import { Root } from './Root';
 
@@ -17,5 +18,6 @@ export {
   PageHero,
   PageHome,
   Root,
+  SectionComics,
   SectionHeroes,
 };
