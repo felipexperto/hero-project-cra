@@ -1,4 +1,4 @@
-import { render } from 'setupTests';
+import { render, screen } from 'setupTests';
 import { ListHeroes } from 'components/Layout';
 import { favorites, itemsArr } from './ListHeroes.mock';
 
@@ -12,6 +12,7 @@ describe('<ListHeroes />', () => {
         favorites={favorites}
         toggleHeroFavorites={toggleHeroFavorites}
         isHeroAmongFavorites={isHeroAmongFavorites}
+        isLoading={false}
       />
     );
     const element = getByTestId('HP_LIST_HEROES');
@@ -25,9 +26,23 @@ describe('<ListHeroes />', () => {
         favorites={favorites}
         toggleHeroFavorites={toggleHeroFavorites}
         isHeroAmongFavorites={isHeroAmongFavorites}
+        isLoading={false}
       />
     );
     const items = list.container.querySelectorAll('li');
     expect(items.length).toEqual(3);
+  });
+
+  it('should render Loader', () => {
+    render(
+      <ListHeroes
+        favorites={favorites}
+        toggleHeroFavorites={toggleHeroFavorites}
+        isHeroAmongFavorites={isHeroAmongFavorites}
+        isLoading={true}
+      />
+    );
+    const element = screen.queryByText('Buscando heróis...');
+    expect(element).toBeInTheDocument();
   });
 });
