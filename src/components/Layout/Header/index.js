@@ -24,8 +24,8 @@ const Header = ({ variant }) => {
           {isPrimary && (
             <>
               <div>
-                <S.Title>Explore o Universo</S.Title>
-                <S.Description>
+                <S.Title data-testid="HP_HEADER_TITLE">Explore o Universo</S.Title>
+                <S.Description data-testid="HP_HEADER_DESCRIPTION">
                   Mergulhe no domínio deslumbrante de todos os personagens clássicos que
                   você ama - e aqueles que você descobrirá em breve!
                 </S.Description>

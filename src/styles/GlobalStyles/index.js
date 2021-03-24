@@ -2,6 +2,9 @@ import { createGlobalStyle } from 'styled-components/macro';
 import theme from 'styles/Themes';
 
 const { main } = theme;
+const fontFamily = `${main.fonts.family}, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+  Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
 
 const GlobalStyles = createGlobalStyle`
   *,
@@ -21,7 +24,7 @@ const GlobalStyles = createGlobalStyle`
 
   html,
   body {
-    font-family: ${main.fonts.family};
+    font-family: ${fontFamily};
     line-height: 1.4em;
     margin: 0;
     padding: 0;

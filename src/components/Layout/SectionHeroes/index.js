@@ -2,21 +2,19 @@ import { useContext, useEffect, useState } from 'react';
 
 import { useDebounce, useLocalStorage } from 'hooks';
 import { HeroesListContext, SearchContext } from 'contexts';
-import { sortCharactersArray } from 'utils/helpers';
+import { isHeroAmongFavorites, sortCharactersArray } from 'utils/helpers';
 import { getCharacters } from 'services';
 import { ListHeroes } from 'components/Layout';
-import { Toggle } from 'components/UI';
-import { HeartFilled, HeartOutline, SuperHero } from 'images/icons';
+import { ButtonOrderByName, ButtonShowFavorites } from 'components/UI';
 import * as S from './styles';
 
-const getHeroes = async (setHook, query = 'limit=20') => {
+const getHeroes = async (setHook, setIsLoadingHook, query = 'limit=20') => {
   const { results } = await getCharacters(query);
   setHook((prevState) => {
     return { ...prevState, heroes: results };
   });
+  setIsLoadingHook(() => false);
 };
-
-const isHeroAmongFavorites = (arr, id) => arr.some((el) => el.id === id);
 
 const SectionHeroes = () => {
   const [renderItems, setRenderItems] = useState([]);
@@ -31,6 +29,8 @@ const SectionHeroes = () => {
     'hp_favorite_characters',
     []
   );
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleHeroFavorites = (character) =>
     setStoredFavoriteCharacters((prevState) => {
@@ -47,9 +47,10 @@ const SectionHeroes = () => {
     });
 
   const handleSearch = () => {
+    const searchQuery = `limit=100&nameStartsWith=${debouncedSearch}`;
     isSearchFieldEmpty
-      ? getHeroes(setHeroesList)
-      : getHeroes(setHeroesList, `limit=100&nameStartsWith=${debouncedSearch}`);
+      ? getHeroes(setHeroesList, setIsLoading)
+      : getHeroes(setHeroesList, setIsLoading, searchQuery);
   };
 
   useEffect(() => {
@@ -92,47 +93,28 @@ const SectionHeroes = () => {
         </S.MenubarColumn>
         <S.MenubarColumn>
           <S.OrderByNameContainer>
-            <S.OrderByNameButton
-              data-testid="HP_BUTTON_ORDER"
-              data-active={heroesList.sort ? 'ativado' : 'desativado'}
-              onClick={(event) => {
+            <ButtonOrderByName
+              isActive={heroesList.sort}
+              handleClick={(event) => {
                 event.preventDefault();
                 setHeroesList((prevState) => {
                   const { sort } = prevState;
                   return { ...prevState, sort: !sort };
                 });
               }}
-              aria-label={`Ordenar lista de heróis por nome - A/Z (${
-                heroesList.sort ? 'ativado' : 'desativado'
-              })`}
-            >
-              <SuperHero data-icon="icon-svg" />
-              <span>Ordenar por nome - A/Z</span>
-              <Toggle active={heroesList.sort} />
-            </S.OrderByNameButton>
+            />
           </S.OrderByNameContainer>
           <S.ShowFavoritesContainer>
-            <S.ShowFavoritesButton
-              data-testid="HP_BUTTON_SHOW_FAVORITES"
-              data-active={heroesList.hearted ? 'ativado' : 'desativado'}
-              onClick={(event) => {
+            <ButtonShowFavorites
+              isActive={heroesList.hearted}
+              handleClick={(event) => {
                 event.preventDefault();
                 setHeroesList((prevState) => {
                   const { hearted } = prevState;
                   return { ...prevState, hearted: !hearted };
                 });
               }}
-              aria-label={`Exibir somente favoritos (${
-                heroesList.hearted ? 'ativado' : 'desativado'
-              })`}
-            >
-              {heroesList.hearted ? (
-                <HeartOutline data-icon="icon-svg" />
-              ) : (
-                <HeartFilled data-icon="icon-svg" />
-              )}
-              <span>Somente favoritos</span>
-            </S.ShowFavoritesButton>
+            />
           </S.ShowFavoritesContainer>
         </S.MenubarColumn>
       </S.Menubar>
@@ -141,6 +123,7 @@ const SectionHeroes = () => {
         favorites={heroesList.favorites}
         itemsArr={renderItems}
         isHeroAmongFavorites={isHeroAmongFavorites}
+        isLoading={isLoading}
         toggleHeroFavorites={toggleHeroFavorites}
       />
     </S.SectionHeroesWrapper>

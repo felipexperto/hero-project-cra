@@ -3,14 +3,17 @@ import { useEffect, useState } from 'react';
 import { object } from 'prop-types';
 
 import { useLocalStorage } from 'hooks';
-import { isArrayFilled, isObjectFilled } from 'utils/helpers';
+import {
+  isArrayFilled,
+  isObjectFilled,
+  formatDate,
+  isHeroAmongFavorites,
+} from 'utils/helpers';
 import { getCharacter, getComics } from 'services';
 import { ButtonFavorite, Container } from 'components/UI';
-import { Footer, Header } from 'components/Layout';
+import { Footer, Header, SectionComics } from 'components/Layout';
 import { Book } from 'images/icons';
 import * as S from './styles';
-
-const isHeroAmongFavorites = (arr, id) => arr.some((el) => el.id === id);
 
 const PageHero = ({ match }) => {
   const {
@@ -81,22 +84,11 @@ const PageHero = ({ match }) => {
       const valueDate = new Date(value);
       return accDate > valueDate ? accDate : valueDate;
     }, 0);
-    const formatDate = (stringDate) => {
-      const fullDate = new Date(stringDate);
-      const day = fullDate.getDate();
-      const month = fullDate.getMonth() + 1;
-      const year = fullDate.getFullYear();
-
-      const intlMonth = new Intl.DateTimeFormat('pt-BR', { month: 'short' }).format;
-      const monthName = intlMonth(new Date(Date.UTC(year, month)));
-
-      setLastComic(`${day} ${monthName} ${year}`);
-    };
-    formatDate(lastPublishedComic);
+    setLastComic(() => formatDate(lastPublishedComic));
   }, [comics]);
 
   return (
-    <S.WrapperPageHero>
+    <S.WrapperPageHero data-testid="HP_PAGEHERO">
       <Header variant="secondary" />
       <Container as="main" aria-label="Detalhes do herói">
         {isObjectFilled(characterDetails) && (
@@ -160,25 +152,7 @@ const PageHero = ({ match }) => {
           </>
         )}
         {isArrayFilled(comics) && (
-          <>
-            <S.OnSale>
-              <S.OnSaleTitle id="onsale-title">Últimos lançamentos</S.OnSaleTitle>
-              <S.OnSaleList aria-labelledby="onsale-title">
-                {comics.slice(0, maxComicsToShow).map((item, index) => {
-                  const {
-                    title,
-                    thumbnail: { path, extension },
-                  } = item;
-                  return (
-                    <S.OnSaleListItem key={index}>
-                      <img src={`${path}.${extension}`} alt={title} />
-                      <h3>{title}</h3>
-                    </S.OnSaleListItem>
-                  );
-                })}
-              </S.OnSaleList>
-            </S.OnSale>
-          </>
+          <SectionComics comics={comics} maxComicsToShow={maxComicsToShow} />
         )}
       </Container>
       <Footer />

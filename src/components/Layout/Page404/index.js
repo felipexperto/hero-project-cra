@@ -6,7 +6,7 @@ import * as S from './styles';
 
 const Page404 = () => {
   return (
-    <S.WrapperPage404>
+    <S.WrapperPage404 data-testid="HP_PAGE_404">
       <Container as="main" alignment="column">
         <S.Title>Oops!</S.Title>
         <S.Subtitle>Página não encontrada :(</S.Subtitle>

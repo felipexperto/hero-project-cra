@@ -10,6 +10,7 @@ const Search = ({ disabled, value, setValue, variant }) => {
         <S.SearchInput
           aria-label="Procure por heróis"
           disabled={disabled}
+          data-testid="HP_SEARCH_INPUT"
           onChange={(e) => setValue(e.target.value)}
           placeholder="Procure por heróis"
           type="search"
@@ -17,6 +18,7 @@ const Search = ({ disabled, value, setValue, variant }) => {
           variant={variant}
         />
         <S.SearchButton
+          data-testid="HP_SEARCH_BUTTON"
           disabled={disabled}
           variant={variant}
           title="Clique para fazer a busca"
